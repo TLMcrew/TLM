@@ -1,0 +1,15 @@
+.buttons{
+    column-count:2;
+}
+.p1{
+    text-align:center;
+}
+h1{
+    text-align:center;
+}
+.buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25px;
+}
