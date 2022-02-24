@@ -1,27 +1,38 @@
 
 h1{
-    text-align:center;
+  text-align:center;
 }
 .headerDiv{
-  text-align: center;
+text-align: center;
 }
 
 .formDiv{
-  
+
 }
 button:hover{
-  opacity:0.5;
+opacity:0.5;
 }
 
 input[type=text], input[type=password] {
-  width: 90%;
-  padding: 12px 20px;
-  margin: 8px 0px;
-  display: inline-block;
-  border: 1px solid black;
-  box-sizing: border-box;
+width: 90%;
+padding: 12px 20px;
+margin: 8px 0px;
+display: inline-block;
+border: 1px solid black;
+box-sizing: border-box;
 }
 .logContainer{
-  outline-style: solid;
+outline-style: solid;
 }
 
+.cancelbtn {
+width: auto;
+padding: 10px 18px;
+background-color: #f44336;
+}
+
+
+span.psw {
+float: right;
+padding-top: 16px;
+}
