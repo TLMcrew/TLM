@@ -1,15 +1,27 @@
-.buttons{
-    column-count:2;
-}
-.p1{
-    text-align:center;
-}
+
 h1{
     text-align:center;
 }
-.buttons{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 25px;
+.headerDiv{
+  text-align: center;
 }
+
+.formDiv{
+  
+}
+button:hover{
+  opacity:0.5;
+}
+
+input[type=text], input[type=password] {
+  width: 90%;
+  padding: 12px 20px;
+  margin: 8px 0px;
+  display: inline-block;
+  border: 1px solid black;
+  box-sizing: border-box;
+}
+.logContainer{
+  outline-style: solid;
+}
+
