@@ -24,6 +24,7 @@
       </p>
       <div class="formDiv">
         <form name="logContainer" id="logContainer">
+        
           <div id="logContainerBoxes" style="float:left">
             <label for="UserNameLog">User Name:
             </label><br>
@@ -39,23 +40,36 @@
         </form>
         
         <form name="RegContainer" id="regContainer">
+          
           <div id="regContainerBoxes" style="float:left">
-            <label for="UserNameLog">User Name:
+            <label for="UserNameReg">User Name:
             </label><br>
             <input type="text" placeholder="Enter Username" 
             name="uNameReg_fld" id="uNameReg_fld" required><br>
+            
+            <label for= "UserNameRegConfirm">Confirm Username: 
+            </label><br>
+            <input type = "text" placeholder = "Confirm Username"
+            name="uNameRegConfirm_fld" id="uNameRegConfirm_fld" required><br>
 
 
-            <label for="PasswordLog">Password:
+            <label for="PasswordReg">Password:
             </label><br>
             <input type="password" placeholder="Enter Password" 
             name="pwdReg_fld" id="pwdReg_fld" required><br>
+            
+            <label for ="PasswordRegConfirm">Confirm Password: 
+            </label><br>
+            <input type="password" placeholder = "Confirm Password"
+            name="pwdRegConfirm_fld" id="pwdRegConfirm_fld" required><br>
+            
+            
           </div>
          <div style="clear:both;">&nbsp;</div>
          
          <div class="container" style="background-color:#f1f1f1">
-      <button type="button" class="cancelbtn">Cancel</button>
-      <span class="psw">Forgot <a href="#">password?</a></span>
+      <button type="button" class="cancelbutton">Cancel</button>
+      <span class="password"><a href="#">Forgot password?</a></span>
     </div>
         </form>
       </div>
