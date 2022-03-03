@@ -23,7 +23,7 @@
         Put login in, get logged in.
       </p>
       <div class="formDiv">
-        <form name="logContainer" id="logContainer">
+        <form name="logContainer" id="logContainer" action ="login.php" method = "post">
         
           <div class="logContainerBoxes">
             <p class = "BoxTopLabels">
@@ -39,7 +39,9 @@
             </label><br>
             <input type="password" placeholder="Enter Password" 
             name="pwdLog_fld" id="pwdLog_fld" required><br>
+            <button type="submit">Login</button>
           </div>
+          
         </form>
         
         
@@ -69,7 +71,7 @@
             </label><br>
             <input type="password" placeholder = "Confirm Password"
             name="pwdRegConfirm_fld" id="pwdRegConfirm_fld" required><br>
-            
+            <button type="submit">Login</button>
              </div>
           
              
@@ -97,5 +99,6 @@
   </body>
 
 </html>
+
 
 
