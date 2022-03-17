@@ -7,8 +7,15 @@
 
 <body>
     <h1>
-        Calendar page
+        placeholder php
     </h1>
+    <?php
+    echo "<ul>\n";
+    for($i = 0; $i <= 10; $i++){
+        echo "<li>$i</li>\n";
+    }
+    echo "</ul>\n";
+    ?>
 
 </body>
 
