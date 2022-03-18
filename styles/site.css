@@ -5,6 +5,10 @@
   margin: 0;
   box-sizing: border-box;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: white;
+}
+body {
+  background-color: #1e2328;
 }
 
 h1{
@@ -59,7 +63,7 @@ padding-top: 16px;
 
 /*------------HEADER/HAMBURGER STYLES------------*/
 header {
-  background-color: #262626;
+  background-color: #2A2E34;
 }
 
 li {
@@ -134,7 +138,7 @@ a{
     top: 70px;
     gap: 0;
     flex-direction: column;
-    background-color: #262626;
+    background-color: #2A2E34;
     width: 10%;
     text-align: center;
     transition: 0.3s;
@@ -147,5 +151,61 @@ a{
   .navMenu.active {
     left: 90%;
   }
+
+}
+
+
+
+/* ------------DASHBOARD BOXES------------ */
+.widgets {
+  display: inline-flex;
+  padding-top: 50px;
+}
+
+.weatherAndCalendar {
+  display: block;
+
+}
+
+.graphs {
+  border-style: solid;
+  border-radius: 25px;
+  border-width: 7px;
+  border-color: #d19900;
+  width: 31em;
+  height: 31em;
+  margin: 8px;
+
+}
+
+.circles {
+  border-style: solid;
+  border-radius: 25px;
+  border-width: 7px;
+  border-color: #d19900;
+  width: 31em;
+  height: 31em;
+  margin: 8px;
+}
+
+.weather {
+  border-style: solid;
+  border-radius: 25px;
+  border-width: 7px;
+  border-color: #d19900;
+  width: 31em;
+  height: 15.3em;
+  margin: 8px;
+
+}
+
+.calendar {
+  border-style: solid;
+  border-radius: 25px;
+  border-width: 7px;
+  border-color: #F5B301;
+  width: 31em;
+  height: 15.3em;
+  margin: 8px;
 
 }
