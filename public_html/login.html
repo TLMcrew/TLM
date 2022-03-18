@@ -3,17 +3,44 @@
   <head>
     <meta charset="utf-8">
     <title>TLM Login</title>
-    <link rel="stylesheet" href="styles/site.css">
+    <link rel="stylesheet" href="../styles/site.css">
   </head>
 
   <body>
 
     <header>
-      <img class=" logo" src="images/Header.jpg" id="head" alt="head">
-      <div class=headerDiv>
-        Total Life Manager
-      </div>
+      <nav class="navbar">
+        <a href="../public_html/dashboard.html" class="navBrand">TLM</a>
+        <ul class="navMenu">
+          <li class="navItem">
+            <a href="../public_html/dashboard.html" class="navLink"
+              >Dashboard</a
+            >
+          </li>
+          <li class="navItem">
+            <a href="../public_html/graphs.html" class="navLink">Graphs</a>
+          </li>
+          <li class="navItem">
+            <a href="../public_html/meals.html" class="navLink">Meals</a>
+          </li>
+          <li class="navItem">
+            <a href="../public_html/calendar.html" class="navLink">Calendar</a>
+          </li>
+          <li class="navItem">
+            <a href="../public_html/faq.html" class="navLink">FAQ</a>
+          </li>
+          <li class="navItem">
+            <a href="../public_html/login.html" class="navLink">Logout</a>
+          </li>
+        </ul>
+        <div class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </nav>
     </header>
+    <script src="../js/hamburger.js"></script>
     <nav>
       <img src="images/Buzz.jpg" alt="doc">
     </nav>

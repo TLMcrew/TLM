@@ -1,16 +1,54 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf=8" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../styles/site.css" />
+  </head>
 
-<head>
-    <title> Total Life manager </title>
-</head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <a href="../public_html/dashboard.html" class="navBrand">TLM</a>
+        <ul class="navMenu">
+          <li class="navItem">
+            <a href="../public_html/dashboard.html" class="navLink"
+              >Dashboard</a
+            >
+          </li>
+          <li class="navItem">
+            <a href="../public_html/graphs.html" class="navLink">Graphs</a>
+          </li>
+          <li class="navItem">
+            <a href="../public_html/meals.html" class="navLink">Meals</a>
+          </li>
+          <li class="navItem">
+            <a href="../public_html/calendar.html" class="navLink">Calendar</a>
+          </li>
+          <li class="navItem">
+            <a href="../public_html/faq.html" class="navLink">FAQ</a>
+          </li>
+          <li class="navItem">
+            <a href="../public_html/login.html" class="navLink">Logout</a>
+          </li>
+        </ul>
+        <div class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </nav>
+    </header>
+    <script src="../js/hamburger.js"></script>
+    <h1>Dashboard</h1>
+    <div class="widgets">
+      <div class="graphs"></div>
+      <div class="circles"></div>
 
-<body>
-    <h1>
-        Dashboard
-    </h1>
-
-</body>
-
+      <div class="weatherAndCalendar">
+        <div class="weather"></div>
+        <div class="calendar"></div>
+      </div>
+    </div>
+  </body>
 </html>
-
