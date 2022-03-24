@@ -1,7 +1,7 @@
-<html lang="en">
+<!DOCTYPE html>
+<html>
   <head>
-    <meta charset="utf-8" />
-    <title>TLM Login</title>
+    <title>Login</title>
     <link rel="stylesheet" href="../styles/site.css" />
   </head>
 
@@ -28,7 +28,7 @@
             <a href="../public_html/faq.html" class="navLink">FAQ</a>
           </li>
           <li class="navItem">
-            <a href="../public_html/login.html" class="navLink">Logout</a>
+            <a href="../public_html/landing.html" class="navLink">Logout</a>
           </li>
         </ul>
         <div class="hamburger">
@@ -39,101 +39,59 @@
       </nav>
     </header>
     <script src="../js/hamburger.js"></script>
-    <nav>
-      <img src="images/Buzz.jpg" alt="doc" />
-    </nav>
-    <main>
-      <h1>Total Life Manager Login/Register Form</h1>
-      <p id="Instructions">
-        <strong>Login Instructions: </strong>
-        Returning users please enter your information into the login box.
-      </p>
-      <p>New users please fill out the register form!</p>
-      <div class="formDiv">
-        <form
-          name="logContainer"
-          id="logContainer"
-          action="login.php"
-          method="post"
-        >
-          <div class="logContainerBoxes">
-            <p class="BoxTopLabels">Login</p>
-            <label for="UserNameLog">User Name: </label><br />
-            <input
-              type="text"
-              placeholder="Enter Username"
-              name="uNameLog_fld"
-              id="uNameLog_fld"
-              required
-            /><br />
-
-            <label for="PasswordLog">Password: </label><br />
-            <input
-              type="password"
-              placeholder="Enter Password"
-              name="pwdLog_fld"
-              id="pwdLog_fld"
-              required
-            /><br />
-            <button type="submit">Login</button>
+    <div class="loginRegister">
+      <div class="login">
+        <h1>Login</h1>
+        <form method="post">
+          <div class="txt_field">
+            <input type="text" required />
+            <span></span>
+            <label>Username</label>
           </div>
-        </form>
-
-        <form name="RegContainer" id="regContainer">
-          <div class="regContainerBoxes">
-            <p class="BoxTopLabels">Register</p>
-            <label for="UserNameReg">User Name: </label><br />
-            <input
-              type="text"
-              placeholder="Enter Username"
-              name="uNameReg_fld"
-              id="uNameReg_fld"
-              required
-            /><br />
-
-            <label for="UserNameRegConfirm">Confirm Username: </label><br />
-            <input
-              type="text"
-              placeholder="Confirm Username"
-              name="uNameRegConfirm_fld"
-              id="uNameRegConfirm_fld"
-              required
-            /><br />
-
-            <label for="PasswordReg">Password: </label><br />
-            <input
-              type="password"
-              placeholder="Enter Password"
-              name="pwdReg_fld"
-              id="pwdReg_fld"
-              required
-            /><br />
-
-            <label for="PasswordRegConfirm">Confirm Password: </label><br />
-            <input
-              type="password"
-              placeholder="Confirm Password"
-              name="pwdRegConfirm_fld"
-              id="pwdRegConfirm_fld"
-              required
-            /><br />
-            <button type="submit">Register</button>
+          <div class="txt_field">
+            <input type="password" required />
+            <span></span>
+            <label>Password</label>
           </div>
-
-          <div style="clear: both">&nbsp;</div>
-
-          <div class="container" style="background-color: #f1f1f1">
-            <button type="button" class="cancelbutton">Cancel</button>
-            <span class="password"><a href="#">Forgot password?</a></span>
-          </div>
+          <div class="pass">Forgot Password?</div>
+          <input type="submit" value="Login" />
+          <!-- <div class="signup_link">Not a member? <a href="#">Signup</a></div> -->
         </form>
       </div>
-      <p id="response">Sample bottom text</p>
 
-      <aside>
-        <img src="images/divide.jpg" alt="accept" />
-      </aside>
-    </main>
-    <footer>sample footer</footer>
+      <div class="register">
+        <h1>Register</h1>
+        <form method="post">
+          <div class = "username">
+          <div class="txt_field">
+            <input type="text" required />
+            <span></span>
+            <label>Username</label>
+          </div>
+          <div class="txt_field">
+            <input type="text" required />
+            <span></span>
+            <label>Email</label>
+          </div>
+        </div>
+
+        <div class = "password">
+          <form method="post">
+            <div class = "username">
+            <div class="txt_field">
+              <input type="password" name="password" required />
+              <span></span>
+              <label>Password</label>
+            </div>
+            <div class="txt_field">
+              <input type="password" name="confirmPassword" required />
+              <span></span>
+              <label>Confirm Password</label>
+            </div>
+        </div>
+          <input type="submit" value="Register" />
+        </form>
+      </div>
+    </div>
   </body>
 </html>
