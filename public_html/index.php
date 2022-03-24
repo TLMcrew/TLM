@@ -20,7 +20,8 @@
 
     $sql = "SELECT * FROM users;";
     $result = mysqli_query($connection, $sql);
-    $resultchecker = mysql_num_rows($result);
+    #$resultchecker = mysql_num_rows($result);
+    $resultchecker = 1;
 
     if($resultchecker > 0){
         while($row = mysqli_fetch_assoc($result)){
@@ -32,7 +33,7 @@
     else {
         echo "no data";
     }
-    $conn->close();
+    $connection->close();
     
     ?>
 
