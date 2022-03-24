@@ -12,7 +12,7 @@
     <?php
     require ("../systemData.php");
     
-    $connection = mysql_connect($DB_SERVER,$DB_PASSWORD,$DB_USER,$DB_NAME);
+    $connection = mysql_connect($DB_SERVER,$DB_USER,$DB_PASSWORD,$DB_NAME);
 
     if (!$connection) {
         die("Connection failed: " . mysqli_connect_error());
