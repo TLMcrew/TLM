@@ -12,20 +12,23 @@
     <?php
     require ("../systemData.php");
     
-    $connection = mysql_connect($DB_SERVER,$DB_USER,$DB_PASSWORD,$DB_NAME);
+    $connection = mysqli_connect($DB_SERVER,$DB_USER,$DB_PASSWORD,$DB_NAME);
 
     if (!$connection) {
         die("Connection failed: " . mysqli_connect_error());
     }
 
-    $sql = "SELECT firstname FROM users";
-    $result = $connection->query($sql);
+    $sql = "SELECT * FROM users;";
+    $result = mysqli_query($connection, $sql);
+    $resultchecker = mysql_num_rows($result);
 
-    if($result->num_rows > 0){
-        while($row = $result->fetch_assoc()) {
-            echo "firstname: " . $row["firstname"];
+    if($resultchecker > 0){
+        while($row = mysqli_fetch_assoc($result)){
+            echo $row['user_id'];
         }
     }
+
+    
     else {
         echo "no data";
     }
