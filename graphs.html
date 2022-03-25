@@ -1,16 +1,198 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <title> Total Life manager </title>
+        <meta charset="utf-8">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 
-<head>
-    <title> Total Life manager </title>
-</head>
+    </head>
 
-<body>
-    <h1>
-       Graphs page
-    </h1>
+    <body>
+        
+        <h1>Graphs page</h1>
+        <div name="graph" style="width: 500px; height: 500px; border-style: solid; border-width: 1px; border-color: black;">
+            <canvas id="myChart" width="400" height="400"></canvas>
+        </div>
+        <br>
+        <form name="graphInput" action="javascript:graph();">
+            <input type="date" id="inputDate" min="1903-01-20" max="">
+            <input type="text" id="val">
+            <input type="submit">
+        </form>
+        <select name="view" id="timeView">
+            <option value="week"  onclick="javascript:updateWeekScale(myChart)">Week View</option>
+            <option value="month" onclick="javascript:updateMonthScale(myChart)">Month View</option>
+            <option value="year" onclick="javascript:updateYearScale(myChart)">Year View</option>
+            <option value="allTime" onclick="javascript:updateFullScale(myChart)">All Time View</option>
+        </select>
+        <script>
+            let myLabels = [];
+            let myValues = [];
+            let myData = [];
+            let currentDate = new Date();
 
-</body>
+            let dd = currentDate.getDate();
+            let mm = currentDate.getMonth()+1;
+            let yyyy = currentDate.getFullYear();
 
+            if(dd < 10) { dd = "0" + dd;}
+            if(mm < 10) { mm = "0" + mm;}
+
+            let today = yyyy + "-" + mm + "-" + dd;
+
+            document.getElementById("inputDate").setAttribute("max", today);
+            let weekViewDate = new Date(currentDate);
+            weekViewDate.setDate(weekViewDate.getDate() - 7);
+
+            let monthViewDate = new Date(currentDate);
+            monthViewDate.setDate(monthViewDate.getDate() - 30);
+            
+            let yearViewDate = new Date(currentDate);
+            yearViewDate.setDate(yearViewDate.getDate() - 365);
+
+            function addData(chart, label, data){
+                chart.data.labels.push(label);
+                chart.data.datasets.forEach((dataset) =>{
+                    dataset.data.push(data);
+                });
+                chart.update();
+            }
+
+            function removeData(chart){
+                chart.data.labels.pop();
+                chart.data.datasets.forEach((dataset) =>{
+                    console.log(dataset.data);
+                    dataset.data.pop();
+                    
+                });
+            }
+
+            function updateWeekScale(chart){
+                chart.options.scales.x.min = weekViewDate;
+                
+                chart.update();
+            }
+
+            function updateMonthScale(chart){
+                chart.options.scales.x.min = monthViewDate;
+
+                chart.update();
+            }
+
+            function updateYearScale(chart){
+                chart.options.scales.x.min = yearViewDate;
+
+                chart.update();
+            }
+
+            function updateFullScale(chart){
+                if(myData[0]){
+                    chart.options.scales.x.min = myData[0].date;
+
+                    chart.update();
+                }
+                
+            }
+
+            function graph(){
+                let myDate = document.graphInput.inputDate.value;
+                let val = document.graphInput.val.value;
+                
+
+                if(myLabels.includes(myDate)){
+                    myValues[myLabels.indexOf(myDate)] += parseFloat(val);
+                }else{
+                    myLabels.push(myDate);
+                    myValues.push(parseFloat(val));
+                }
+                myData = myLabels.map(function(d, i){
+                    return {
+                        date: d,
+                        value: myValues[i] || 0
+                    };
+                });
+                //myData.push({date: myDate, value: val});
+                
+                console.log(myData);
+                let mySortedData = myData.sort(function(a, b){
+                    const dateA = a.date;
+                    const dateB = b.date;
+                    if(dateA < dateB){
+                        return -1;
+                    }
+                    if(dateB < dateA){
+                        return 1
+                    }
+                    return 0;
+                });
+                console.log(mySortedData);
+                // let myLabelsInstance = [];
+                // let myValuesInstance = [];
+
+                
+                mySortedData.forEach(function(d) {
+                    addData(myChart, d.date, d.value);
+                    /*
+                    myLabelsInstance.push(d.date)
+                    myValuesInstance.push(d.value);
+                    */
+                });
+
+                // myLabels = myLabelsInstance;
+                // myValues = myValuesInstance;
+                document.getElementById("timeView").options[3].click();
+                //updateFullScale(myChart);
+                myChart.update();
+                removeData(myChart);
+            }
+
+            const ctx = document.getElementById('myChart').getContext('2d');
+            const myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Calories',
+                        data: [],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            min: weekViewDate,
+                            max: currentDate,
+                            type: 'time',
+                            time: {
+                                unti: 'day',
+                                displayFormats: {
+                                    day: 'MM/dd/yy'
+                                }
+                                
+                            },
+                            ticks: {
+                                autoSkip: false,
+                                major: {
+                                    enabled: true
+                                }
+                            }
+                        },
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+    </body>
 </html>
 
