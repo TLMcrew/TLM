@@ -7,11 +7,43 @@
         
         <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
-
+        <link rel="stylesheet" href="../styles/site.css" />
     </head>
 
     <body>
-        
+        <header>
+            <nav class="navbar">
+              <a href="../public_html/dashboard.html" class="navBrand">TLM</a>
+              <ul class="navMenu">
+                <li class="navItem">
+                  <a href="../public_html/dashboard.html" class="navLink"
+                    >Dashboard</a
+                  >
+                </li>
+                <li class="navItem">
+                  <a href="../public_html/graphs.html" class="navLink">Graphs</a>
+                </li>
+                <li class="navItem">
+                  <a href="../public_html/meals.html" class="navLink">Meals</a>
+                </li>
+                <li class="navItem">
+                  <a href="../public_html/calendar.html" class="navLink">Calendar</a>
+                </li>
+                <li class="navItem">
+                  <a href="../public_html/faq.html" class="navLink">FAQ</a>
+                </li>
+                <li class="navItem">
+                  <a href="../public_html/landing.html" class="navLink">Logout</a>
+                </li>
+              </ul>
+              <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+              </div>
+            </nav>
+          </header>
+          <script src="../js/hamburger.js"></script>
         <h1>Graphs page</h1>
         <div name="graph" style="width: 500px; height: 500px; border-style: solid; border-width: 1px; border-color: black;">
             <canvas id="myChart" width="400" height="400"></canvas>
