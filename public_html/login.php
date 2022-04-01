@@ -71,92 +71,33 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
   </head>
 
   <body>
-    <header>
-      <nav class="navbar">
-        <a href="../public_html/dashboard.html" class="navBrand">TLM</a>
-        <ul class="navMenu">
-          <li class="navItem">
-            <a href="../public_html/dashboard.html" class="navLink"
-              >Dashboard</a
-            >
-          </li>
-          <li class="navItem">
-            <a href="../public_html/graphs.html" class="navLink">Graphs</a>
-          </li>
-          <li class="navItem">
-            <a href="../public_html/meals.html" class="navLink">Meals</a>
-          </li>
-          <li class="navItem">
-            <a href="../public_html/calendar.html" class="navLink">Calendar</a>
-          </li>
-          <li class="navItem">
-            <a href="../public_html/faq.html" class="navLink">FAQ</a>
-          </li>
-          <li class="navItem">
-            <a href="../public_html/landing.html" class="navLink">Logout</a>
-          </li>
-        </ul>
-        <div class="hamburger">
-          <span class="bar"></span>
-          <span class="bar"></span>
-          <span class="bar"></span>
-        </div>
-      </nav>
-    </header>
-    <script src="../js/hamburger.js"></script>
-    <div class="loginRegister">
-      <div class="login">
-        <h1>Login</h1>
-        <form method="post">
-          <div class="txt_field">
-            <input type="text" required />
-            <span></span>
-            <label>Username</label>
-          </div>
-          <div class="txt_field">
-            <input type="password" required />
-            <span></span>
-            <label>Password</label>
-          </div>
-          <div class="pass">Forgot Password?</div>
-          <input type="submit" value="Login" />
-          <!-- <div class="signup_link">Not a member? <a href="#">Signup</a></div> -->
-        </form>
-      </div>
+  <body>
+    <div class="wrapper">
+        <h2>Login</h2>
+        <p>Please fill in your credentials to login.</p>
 
-      <div class="register">
-        <h1>Register</h1>
-        <form method="post">
-          <div class = "username">
-          <div class="txt_field">
-            <input type="text" required />
-            <span></span>
-            <label>Username</label>
-          </div>
-          <div class="txt_field">
-            <input type="text" required />
-            <span></span>
-            <label>Email</label>
-          </div>
-        </div>
+        <?php 
+        if(!empty($login_err)){
+            echo '<div class="alert alert-danger">' . $login_err . '</div>';
+        }        
+        ?>
 
-        <div class = "password">
-          <form method="post">
-            <div class = "username">
-            <div class="txt_field">
-              <input type="password" name="password" required />
-              <span></span>
-              <label>Password</label>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
+                <span class="invalid-feedback"><?php echo $Uname_error; ?></span>
+            </div>    
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
+                <span class="invalid-feedback"><?php echo $pass_error; ?></span>
             </div>
-            <div class="txt_field">
-              <input type="password" name="confirmPassword" required />
-              <span></span>
-              <label>Confirm Password</label>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Login">
             </div>
-        </div>
-          <input type="submit" value="Register" />
+            <p>Don't have an account? <a href="register.php">Sign up now</a>.</p>
         </form>
-      </div>
     </div>
-  </body>
+</body>
 </html>
