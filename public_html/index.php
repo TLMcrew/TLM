@@ -1,3 +1,14 @@
+<?php
+require ("../systemData.php");
+    
+session_start();
+
+if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+    header("location: login.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -7,36 +18,16 @@
 
 <body>
     <h1>
-        placeholder php
+        welcome 
     </h1>
-    <?php
-    require ("../systemData.php");
-    
-    $connection = mysqli_connect($DB_SERVER,$DB_USER,$DB_PASSWORD,$DB_NAME);
+    <h2 class ="helloClass">
+        Hi, <b><?php echo htmlspecialchars($_SESSION["username"]);
+        ?></b>. 
 
-    if (!$connection) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-
-    $sql = "SELECT * FROM users;";
-    $result = mysqli_query($connection, $sql);
-    #$resultchecker = mysql_num_rows($result);
-    $resultchecker = 1;
-
-    if($resultchecker > 0){
-        while($row = mysqli_fetch_assoc($result)){
-            echo $row['user_id'];
-        }
-    }
-
-    
-    else {
-        echo "no data";
-    }
-    $connection->close();
-    
-    ?>
-
+    </h2>
+    <p>
+        <a href = "logout.php" class="btn btn-danger m1-3">Sign out. </a>
+    </p>
 </body>
 
 </html>
