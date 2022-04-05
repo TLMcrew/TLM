@@ -26,7 +26,7 @@ USE `app`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `userdata`
+-- Table structure for table `userdata` a
 --
 
 DROP TABLE IF EXISTS `userdata`;
