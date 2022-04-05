@@ -83,6 +83,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 header("location: login.php");
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
+                echo $username;
             }
 
             // Close statement
