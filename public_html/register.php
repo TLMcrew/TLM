@@ -1,85 +1,112 @@
 <?php
+// Include config file
 require ("../systemData.php");
-
-$username = "";
-$confirm_username = "";
-$password = "";
-$confirm_password = "";
-$Uname_error = $pass_error = $confirm_pass_error = "";
-
+ 
+// Define variables and initialize with empty values
+$username = $password = $confirm_password = "";
+$username_err = $password_err = $confirm_password_err = "";
+ 
+// Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-
+ 
+    // Validate username
     if(empty(trim($_POST["username"]))){
-        $Uname_error = "Please enter a username in the box.";
-    } elseif(!preg_match('/^[a-zA-Z0-9_]+$/',trim($_POST["username"]))){
-        $Uname_error = "User name can only have letters, numbers, and underscores.";
-    }else{
-        $sql = "SELECT user_id FROM users WHERE username = ?";
-
+        $username_err = "Please enter a username.";
+    } elseif(!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["username"]))){
+        $username_err = "Username can only contain letters, numbers, and underscores.";
+    } else{
+        // Prepare a select statement
+        $sql = "SELECT id FROM users WHERE username = ?";
+        
         if($stmt = mysqli_prepare($link, $sql)){
+            // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "s", $param_username);
-
+            
+            // Set parameters
             $param_username = trim($_POST["username"]);
-
+            
+            // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
-                mysqli_stmt_store_results($stmt);
+                /* store result */
+                mysqli_stmt_store_result($stmt);
+                
                 if(mysqli_stmt_num_rows($stmt) == 1){
-                    $Uname_error = "User name already exists in the system.";
+                    $username_err = "This username is already taken.";
                 } else{
-                    $Username = trim($_POST["username"]);
+                    $username = trim($_POST["username"]);
                 }
-            }else{
-                echo "There was an error, try entering it again.";
+            } else{
+                echo "Oops! Something went wrong. Please try again later.";
             }
+
+            // Close statement
             mysqli_stmt_close($stmt);
         }
     }
+    
+    // Validate password
     if(empty(trim($_POST["password"]))){
-        $pass_error = "Please enter a password in the form.";
-    }elseif(strlen(trim($_POST["password"])) < 8){
-        $pass_error = "Password must be atleast 8 characters long.";
-    }else{
-        $Password = trim($_POST["password"]);
+        $password_err = "Please enter a password.";     
+    } elseif(strlen(trim($_POST["password"])) < 6){
+        $password_err = "Password must have atleast 6 characters.";
+    } else{
+        $password = trim($_POST["password"]);
     }
-
+    
+    // Validate confirm password
     if(empty(trim($_POST["confirm_password"]))){
-        $confirm_pass_error = "Please enter the password again.";
+        $confirm_password_err = "Please confirm password.";     
     } else{
         $confirm_password = trim($_POST["confirm_password"]);
-        if(empty($pass_error) && ($password != $confirm_password)){
-            $confirm_pass_error = "The passwords entered do not match.";
+        if(empty($password_err) && ($password != $confirm_password)){
+            $confirm_password_err = "Password did not match.";
         }
     }
-    if(empty($Uname_error) && empty($pass_error) && empty($confirm_pass_error)){
-        $sql = "INSERT INTO users (username, password) VALUES (?,?)";
-
+    
+    // Check input errors before inserting in database
+    if(empty($username_err) && empty($password_err) && empty($confirm_password_err)){
+        
+        // Prepare an insert statement
+        $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+         
         if($stmt = mysqli_prepare($connection, $sql)){
+            // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password);
-
+            
+            // Set parameters
             $param_username = $username;
-            $param_password = password_hash($password, PASSWORD_DEFAULT);
-
+            $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
+            
+            // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
+                // Redirect to login page
                 header("location: login.php");
             } else{
-                echo "Something went wrong, please try again.";
+                echo "Oops! Something went wrong. Please try again later.";
             }
+
+            // Close statement
             mysqli_stmt_close($stmt);
         }
     }
+    
+    // Close connection
     mysqli_close($connection);
 }
-
-
 ?>
+ 
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Login</title>
-    <link rel="stylesheet" href="../styles/site.css" />
-  </head>
-
-  <body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body{ font: 14px sans-serif; }
+        .wrapper{ width: 360px; padding: 20px; }
+    </style>
+</head>
+<body>
     <div class="wrapper">
         <h2>Sign Up</h2>
         <p>Please fill this form to create an account.</p>
