@@ -45,7 +45,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["id"] = $id;
                             $_SESSION["username"] = $username;
 
-                            header("location: dashboard.html");
+                            header("location: welcome.php");
                         } else{
                             $login_error = "Invalid User name or Password.";
                         }
