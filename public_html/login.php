@@ -14,13 +14,13 @@ $Uname_error = $pass_error = $login_error = "";
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     if(empty(trim($_POST["username"]))){
-        $Uname_error = "Please enter a username in the form.";
+        $Uname_error = "Please enter a username in the form.";#works
     } else{
         $username = trim($_POST["username"]);
     }
     
     if(empty(trim($_POST["password"]))){
-        $pass_error = "Please enter a password in the form.";
+        $pass_error = "Please enter a password in the form."; #works
     } else{
         $password = trim($_POST["password"]);
     }
@@ -45,7 +45,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["id"] = $id;
                             $_SESSION["username"] = $username;
 
-                            header("location: welcome.php");
+                            header("location: dashboard.html");
                         } else{
                             $login_error = "Invalid User name or Password.";
                         }
