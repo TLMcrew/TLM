@@ -5,7 +5,9 @@ require ("../systemData.php");
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = "";
 $username_err = $password_err = $confirm_password_err = "";
- 
+$sql1 = "SELECT * from users";
+echo $sql1;
+
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
  
