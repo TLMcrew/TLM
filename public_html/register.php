@@ -6,6 +6,8 @@ require ("../systemData.php");
 $username = $password = $confirm_password = "";
 $username_err = $password_err = $confirm_password_err = "";
 $sql1 = "SELECT * from users";
+mysqli_stmt_execute($sql1);
+mysqli_stmt_store_result($sql1);
 echo $sql1;
 
 // Processing form data when form is submitted
