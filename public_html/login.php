@@ -57,13 +57,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         if(password_verify($password, $hashed_password)){
                             // Password is correct, so start a new session
                             session_start();
-                            echo "part1";
                             
                             // Store data in session variables
                             $_SESSION["loggedin"] = true;
                             $_SESSION["id"] = $id;
-                            $_SESSION["username"] = $username;                            
-                            echo "part2";
+                            $_SESSION["username"] = $username; 
                             // Redirect user to welcome page
                             header("location: welcome.php");
                         } else{
