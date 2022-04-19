@@ -3,9 +3,9 @@
 
 session_start();
 
-if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: welcome.php");
-    exit;
+if ( !isset($_POST['username'], $_POST['password']) ) {
+	// Could not get the data that should have been sent.
+	exit('Please fill both the username and password fields!');
 }
 require ("../systemData.php");
 
