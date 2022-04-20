@@ -44,9 +44,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         if($result === false){
             echo "query failed";
         }
+        if(mysqli_stmt_store_result($rows) == 1){
+            session_start();
+            $_SESSION["loggedin"] = true;
+            $_SESSION["id"] = $id;
+            $_SESSION["username"] = $username; 
+        } else{
+            // Username doesn't exist, display a generic error message
+            $login_err = "Invalid username or password.";
+        }
         mysqli_close($link);
         
-    }
+    }else
+    echo "get absolutely smacked lad";
 }
 ?>
 
