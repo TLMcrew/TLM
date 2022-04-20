@@ -44,7 +44,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         if($result === false){
             echo "query failed";
         }
-        if(mysqli_stmt_store_result($rows) == 1){
+        $data = mysqli_fetch_assoc($result);
+        if($data == 1){
             session_start();
             $_SESSION["loggedin"] = true;
             $_SESSION["id"] = $id;
