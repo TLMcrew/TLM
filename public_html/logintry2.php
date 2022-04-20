@@ -45,7 +45,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             echo "query failed";
         }
         $data = mysqli_fetch_assoc($result);
-        if($data == 1){
+        $count = $data['TOTAL'];
+        if($count == 1){
             session_start();
             $_SESSION["loggedin"] = true;
             $_SESSION["id"] = $id;
