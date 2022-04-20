@@ -1,44 +1,50 @@
 <?php
 
-
+// Initialize the session
 session_start();
 
-if (!isset($_POST['username'], $_POST['password']) ) {
-	// Could not get the data that should have been sent.
-	exit('Please fill both the username and password fields!');
+// Check if the user is already logged in, if yes then redirect him to welcome page
+if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+    header("location: welcome.php");
+    exit;
 }
+
+// Include config file
 require ("../systemData.php");
 
-
-// Prepare our SQL, preparing the SQL statement will prevent SQL injection.
-if ($stmt = $con->prepare('SELECT user_id, password FROM users WHERE username = ?')) {
-	$stmt->bind_param('s', $_POST['username']);
-	$stmt->execute();
-	// Store the result so we can check if the account exists in the database.
-	$stmt->store_result();
-
-    if ($stmt->num_rows > 0) {
-        $stmt->bind_result($user_id, $password);
-        $stmt->fetch();
-        // Account exists, now we verify the password.
-        // Note: remember to use password_hash in your registration file to store the hashed passwords.
-        if ($_POST['password'] === $password) {
-            // Verification success! User has logged-in!
-            // Create sessions, so we know the user is logged in, they basically act like cookies but remember the data on the server.
-            session_regenerate_id();
-            $_SESSION['loggedin'] = TRUE;
-            $_SESSION['name'] = $_POST['username'];
-            $_SESSION['id'] = $user_id;
-            echo 'Welcome ' . $_SESSION['name'] . '!';
-        } else {
-            // Incorrect password
-            echo 'Incorrect username and/or password!';
-        }
-    } else {
-        // Incorrect username
-        echo 'Incorrect username and/or password!';
+// Define variables and initialize with empty values
+$username = $password = "";
+$username_err = $password_err = $login_err = "";
+ 
+// Processing form data when form is submitted
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+ 
+    // Check if username is empty
+    if(empty(trim($_POST["username"]))){
+        $username_err = "Please enter username.";
+    } else{
+        $username = trim($_POST["username"]);
     }
+    
+    // Check if password is empty
+    if(empty(trim($_POST["password"]))){
+        $password_err = "Please enter your password.";
+    } else{
+        $password = trim($_POST["password"]);
+    }
+    if(empty($username_err) && empty($password_err)){
+        // Prepare a select statement
+        $sql = "SELECT user_id, username, password FROM users WHERE username = '".$username."' AND password = '".$password."'";
 
-	$stmt->close();
-}
+        $link = mysqli_connect($DB_SERVER,$DB_USER,$DB_PASSWORD,$DB_NAME);
+        if($link === false){
+            die("ERROR: Could not connect. " . mysqli_connect_error());
+        }
+        $result = $link->query($sql);
+        if($result === false){
+            echo "query failed";
+        }
+        mysqli_close($link);
+        
+
 ?>
