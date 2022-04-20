@@ -1,6 +1,6 @@
 <?php
 // Include config file
-require_once "../systemData.php";
+require ("../systemData.php");
  
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = "";
@@ -67,7 +67,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(empty($username_err) && empty($password_err) && empty($confirm_password_err)){
         
         // Prepare an insert statement
-       /* $sql = "SELECT COUNT(*) AS TOTAL FROM users WHERE username = '" . $username . "'";
+        $sql = "SELECT COUNT(*) AS TOTAL FROM users WHERE username = '" . $username . "'";
         
         $link = mysqli_connect($DB_SERVER,$DB_USER,$DB_PASSWORD,$DB_NAME);
         if($link === false){
@@ -79,14 +79,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
         $data = mysqli_fetch_assoc($result);
         $count = $data['TOTAL'];
-        */#if($data == 0){
+        if($data == 0){
             $sql = "INSERT INTO users (username, password) VALUES ('". $username . "', '"
             . $password . "')";
             $result = $link->query($sql);
             echo "User Successfully created";
-        #} else{
-            #echo "Username already taken";
-        #}
+        } else{
+            echo "Username already taken";
+        }
 
     }
     
