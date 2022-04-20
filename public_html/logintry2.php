@@ -34,8 +34,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     if(empty($username_err) && empty($password_err)){
         // Prepare a select statement
-        $sql = "SELECT user_id, username, password FROM users WHERE username = '".$username."' AND password = '".$password."'";
-
+        #$sql = "SELECT user_id, username, password FROM users WHERE username = '".$username."' AND password = '".$password."'";
+        $sql = "SELECT COUNT(*) AS TOTAL FROM users WHERE username = '" . $username . "' AND 
+        password = '" . $password . "'";
         $link = mysqli_connect($DB_SERVER,$DB_USER,$DB_PASSWORD,$DB_NAME);
         if($link === false){
             die("ERROR: Could not connect. " . mysqli_connect_error());
