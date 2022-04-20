@@ -52,7 +52,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $_SESSION["loggedin"] = true;
             $_SESSION["id"] = $id;
             $_SESSION["username"] = $username; 
-            header("Location: dashboard.php");
+            header("Location: dashboard.html");
         } else{
             // Username doesn't exist, display a generic error message
             $login_err = "Invalid username or password.";
