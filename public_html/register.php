@@ -82,7 +82,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         if($data == 0){
             $sql = "INSERT INTO users (username, password) VALUES ('". $username . "', '"
             . $password . "')";
-            $result = $conn->query($sql);
+            $result = $link->query($sql);
             echo "User Successfully created";
         } else{
             echo "Username already taken";
