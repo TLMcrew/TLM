@@ -78,7 +78,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <a href="../public_html/dashboard.html" class="navBrand">TLM</a>
         <ul class="navMenu">
           <li class="navItem">
-            <a href="../public_html/dashboard.html" class="navLink"
+            <a href="/~logan/dashboard.html" class="navLink"
               >Dashboard</a
             >
           </li>
