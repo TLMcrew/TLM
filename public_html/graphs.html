@@ -1,161 +1,279 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title> Total Life manager </title>
-        <meta charset="utf-8">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        
-        <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
-        <link rel="stylesheet" href="../styles/site.css" />
-    </head>
 
-    <body>
-        <header>
-            <nav class="navbar">
-              <a href="../public_html/dashboard.html" class="navBrand">TLM</a>
-              <ul class="navMenu">
+<head>
+    <title> Total Life manager </title>
+    <meta charset="utf-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"
+        integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+        </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <link rel="stylesheet" href="../styles/site.css" />
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <a href="../public_html/dashboard.html" class="navBrand">TLM</a>
+            <ul class="navMenu">
                 <li class="navItem">
-                  <a href="../public_html/dashboard.html" class="navLink"
-                    >Dashboard</a
-                  >
+                    <a href="../public_html/dashboard.html" class="navLink">Dashboard</a>
                 </li>
                 <li class="navItem">
-                  <a href="../public_html/graphs.html" class="navLink">Graphs</a>
+                    <a href="../public_html/graphs.html" class="navLink">Graphs</a>
                 </li>
                 <li class="navItem">
-                  <a href="../public_html/meals.html" class="navLink">Meals</a>
+                    <a href="../public_html/meals.html" class="navLink">Meals</a>
                 </li>
                 <li class="navItem">
-                  <a href="../public_html/calendar.html" class="navLink">Calendar</a>
+                    <a href="../public_html/calendar.html" class="navLink">Calendar</a>
                 </li>
                 <li class="navItem">
-                  <a href="../public_html/faq.html" class="navLink">FAQ</a>
+                    <a href="../public_html/faq.html" class="navLink">FAQ</a>
                 </li>
                 <li class="navItem">
-                  <a href="../public_html/landing.html" class="navLink">Logout</a>
+                    <a href="../public_html/landing.html" class="navLink">Logout</a>
                 </li>
-              </ul>
-              <div class="hamburger">
+            </ul>
+            <div class="hamburger">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
-              </div>
-            </nav>
-          </header>
-          <script src="../js/hamburger.js"></script>
-        <h1>Graphs page</h1>
-        <div name="graph" style="width: 500px; height: 500px; border-style: solid; border-width: 1px; border-color: black;">
-            <canvas id="myChart" width="400" height="400"></canvas>
-        </div>
-        <br>
+            </div>
+        </nav>
+    </header>
+    <script src="../js/hamburger.js"></script>
+
+    <h1>Graphs page</h1>
+
+    <div name="graph" id="myGraph">
+        <canvas id="myChart" width="400" height="400"></canvas>
+    </div>
+    <br>
+
+    <div class="halfPage">
+        <form name="bioInfo" action="javascript:updateBio();">
+            <input id="height" type="text"></input>
+            <input id="weight" type="text"></input>
+            <input id="weightGoal" type="text"></input>
+            <input type="submit" value="Update Information">
+        </form>
+
         <form name="graphInput" action="javascript:graph();">
             <input type="date" id="inputDate" min="1903-01-20" max="">
             <input type="text" id="val">
             <input type="submit">
         </form>
+
         <select name="view" id="timeView">
-            <option value="week"  onclick="javascript:updateWeekScale(myChart)">Week View</option>
+            <option value="week" onclick="javascript:updateWeekScale(myChart)">Week View</option>
             <option value="month" onclick="javascript:updateMonthScale(myChart)">Month View</option>
             <option value="year" onclick="javascript:updateYearScale(myChart)">Year View</option>
             <option value="allTime" onclick="javascript:updateFullScale(myChart)">All Time View</option>
         </select>
-        <script>
-            let myLabels = [];
-            let myValues = [];
-            let myData = [];
-            let currentDate = new Date();
 
-            let dd = currentDate.getDate();
-            let mm = currentDate.getMonth()+1;
-            let yyyy = currentDate.getFullYear();
+        <select name="dataSet" id="dataSet">
+            <option value="cal">Calories</option>
+            <option value="weight">Weight</option>
+            <option value="water">Water Intake</option>
+            <option value="sleep">Hours Slept</option>
+            <option value="exercise">Exercise Time</option>
+        </select>
+        <button type="button" onclick="saveData()">Save Changes</button>
+    </div>
+    <script>
+        //Testing arrays that may be used in final, still trying to figure out how to use Chart.js
+        let myLabels = [];
+        let myValues = [];
+        let myData = [];
 
-            if(dd < 10) { dd = "0" + dd;}
-            if(mm < 10) { mm = "0" + mm;}
+        //User data arrays
+        let calData = [
+            // { date: new Date(2022, 2, 13), value: 200 },
+            // { date: new Date(2022, 2, 14), value: 180 },
+            // {date: new Date(2022, 3, 2), value: 190},
+            // {date: new Date(2022, 3, 6), value: 180}
+        ];
+        let weightData = [];
+        let waterData = [];
+        let sleepData = [];
+        let exerciseData = [];
 
-            let today = yyyy + "-" + mm + "-" + dd;
+        /**
+         * Code to fill these arrays with data from the database
+         * goes here
+        */
 
-            document.getElementById("inputDate").setAttribute("max", today);
-            let weekViewDate = new Date(currentDate);
-            weekViewDate.setDate(weekViewDate.getDate() - 7);
+        for (let x of calData) { myValues.push(x.value); }
+        for (let x of weightData) { myValues.push(x.value); }
+        for (let x of waterData) { myValues.push(x.value); }
+        for (let x of sleepData) { myValues.push(x.value); }
+        for (let x of exerciseData) { myValues.push(x.value); }
 
-            let monthViewDate = new Date(currentDate);
-            monthViewDate.setDate(monthViewDate.getDate() - 30);
-            
-            let yearViewDate = new Date(currentDate);
-            yearViewDate.setDate(yearViewDate.getDate() - 365);
+        //used as reference for various time scale views
+        let currentDate = new Date();
 
-            function addData(chart, label, data){
-                chart.data.labels.push(label);
-                chart.data.datasets.forEach((dataset) =>{
-                    dataset.data.push(data);
-                });
-                chart.update();
-            }
+        let dd = currentDate.getDate();
+        let mm = currentDate.getMonth() + 1;
+        let yyyy = currentDate.getFullYear();
 
-            function removeData(chart){
-                chart.data.labels.pop();
-                chart.data.datasets.forEach((dataset) =>{
-                    console.log(dataset.data);
-                    dataset.data.pop();
-                    
-                });
-            }
+        if (dd < 10) { dd = "0" + dd; }
+        if (mm < 10) { mm = "0" + mm; }
 
-            function updateWeekScale(chart){
-                chart.options.scales.x.min = weekViewDate;
+        //Sets limit on html date input to the current date
+        let today = yyyy + "-" + mm + "-" + dd;
+        document.getElementById("inputDate").setAttribute("max", today);
+
+
+        let weekViewDate = new Date(currentDate);
+        weekViewDate.setDate(weekViewDate.getDate() - 7);
+
+        let monthViewDate = new Date(currentDate);
+        monthViewDate.setDate(monthViewDate.getDate() - 31);
+
+        let yearViewDate = new Date(currentDate);
+        yearViewDate.setDate(yearViewDate.getDate() - 365);
+
+        //adds data to a chart, probably will be changed dramatically
+        function addData(chart, label, data) {
+            chart.data.labels.push(label);
+            chart.data.datasets.forEach((dataset) => {
+                dataset.data.push(data);
+            });
+            chart.update();
+        }
+
+        //removes data from a chart, definitely will be changed dramatically
+        function removeData(chart) {
+            chart.data.labels.pop();
+            //chart.data.datasets.data.pop();
+            /*forEach((dataset) =>{
+                console.log(dataset.data);
+                dataset.data.pop();
                 
+            });*/
+        }
+
+        //Functions to change the time scale view
+        function updateWeekScale(chart) {
+            chart.options.scales.x.min = weekViewDate;
+
+            chart.update();
+        }
+
+        function updateMonthScale(chart) {
+            chart.options.scales.x.min = monthViewDate;
+
+            chart.update();
+        }
+
+        function updateYearScale(chart) {
+            chart.options.scales.x.min = yearViewDate;
+
+            chart.update();
+        }
+
+        //Will be changed
+        function updateFullScale(chart) {
+            if (myData[0]) {
+                chart.options.scales.x.min = myData[0].date;
+
                 chart.update();
             }
+        }
 
-            function updateMonthScale(chart){
-                chart.options.scales.x.min = monthViewDate;
+        function setMax(chart) {
+            myValues.sort();
+            let lastInd = myValues.length - 1;
+            chart.options.scales.y.max = myValues[lastInd] + (myValues[lastInd] / 5);
+            console.log(chart.options.scales.y.max);
 
-                chart.update();
-            }
+        }
 
-            function updateYearScale(chart){
-                chart.options.scales.x.min = yearViewDate;
+        //Got too lost in my original graph function, moved work here for clarity
+        //Pushes a date and value into an array and then sorts by date
+        function dataUpdateFunction(daDate, numberValue, dataSet) {
+            dataSet.push({ date: daDate, value: numberValue });
+            dataDateSort(dataSet);
+            myValues.push(numberValue);
 
-                chart.update();
-            }
+            setMax(myChart);
+        }
 
-            function updateFullScale(chart){
-                if(myData[0]){
-                    chart.options.scales.x.min = myData[0].date;
-
-                    chart.update();
+        //sorts arrays by a date variable
+        function dataDateSort(dataSet) {
+            dataSet = dataSet.sort(function (a, b) {
+                const dateA = a.date;
+                const dateB = b.date;
+                if (dateA < dateB) {
+                    return -1;
                 }
-                
-            }
+                if (dateB < dateA) {
+                    return 1
+                }
+                return 0;
+            });
+        }
 
-            function graph(){
-                let myDate = document.graphInput.inputDate.value;
-                let val = document.graphInput.val.value;
-                
+        //a fucking mess
+        function graph() {
+            let dataSet = document.getElementById('dataSet').value;
+            let myDate = document.graphInput.inputDate.value;
+            let val = document.graphInput.val.value;
+            let numVal = parseFloat(val);
 
-                if(myLabels.includes(myDate)){
+            if (!isNaN(numVal)) {
+                switch (dataSet) {
+                    case "cal":
+                        dataUpdateFunction(myDate, numVal, calData);
+                        console.log(calData);
+                        break;
+                    case "weight":
+                        dataUpdateFunction(myDate, numVal, weightData);
+                        console.log(weightData);
+                        break;
+                    case "water":
+                        dataUpdateFunction(myDate, numVal, waterData);
+                        console.log(waterData);
+                        break;
+                    case "sleep":
+                        dataUpdateFunction(myDate, numVal, sleepData);
+                        console.log(sleepData);
+                        break;
+                    case "exercise":
+                        dataUpdateFunction(myDate, numVal, exerciseData);
+                        console.log(exerciseData);
+                        break;
+                }
+
+
+                /*
+                if (myLabels.includes(myDate)) {
                     myValues[myLabels.indexOf(myDate)] += parseFloat(val);
-                }else{
+                } else {
                     myLabels.push(myDate);
                     myValues.push(parseFloat(val));
                 }
-                myData = myLabels.map(function(d, i){
+                myData = myLabels.map(function (d, i) {
                     return {
                         date: d,
                         value: myValues[i] || 0
                     };
                 });
                 //myData.push({date: myDate, value: val});
-                
+
                 console.log(myData);
-                let mySortedData = myData.sort(function(a, b){
+                let mySortedData = myData.sort(function (a, b) {
                     const dateA = a.date;
                     const dateB = b.date;
-                    if(dateA < dateB){
+                    if (dateA < dateB) {
                         return -1;
                     }
-                    if(dateB < dateA){
+                    if (dateB < dateA) {
                         return 1
                     }
                     return 0;
@@ -164,67 +282,168 @@
                 // let myLabelsInstance = [];
                 // let myValuesInstance = [];
 
-                
-                mySortedData.forEach(function(d) {
+
+                mySortedData.forEach(function (d) {
                     addData(myChart, d.date, d.value);
                     /*
                     myLabelsInstance.push(d.date)
                     myValuesInstance.push(d.value);
-                    */
+                    
                 });
 
                 // myLabels = myLabelsInstance;
                 // myValues = myValuesInstance;
                 document.getElementById("timeView").options[3].click();
                 //updateFullScale(myChart);
+                let myValuesCopy = myValues;
+                myChart.options.scales.y.max = myValuesCopy.sort()[myValuesCopy.length - 1] + 15;
+                */
                 myChart.update();
-                removeData(myChart);
+                //removeData(myChart);
             }
+        }
 
-            const ctx = document.getElementById('myChart').getContext('2d');
-            const myChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: [],
-                    datasets: [{
-                        label: 'Calories',
-                        data: [],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        x: {
-                            min: weekViewDate,
-                            max: currentDate,
-                            type: 'time',
-                            time: {
-                                unti: 'day',
-                                displayFormats: {
-                                    day: 'MM/dd/yy'
-                                }
-                                
-                            },
-                            ticks: {
-                                autoSkip: false,
-                                major: {
-                                    enabled: true
-                                }
+        //the chart itself
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                //labels: [],
+                //5 datasets
+                datasets: [{
+                    label: 'Calories',
+                    data: calData,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                    ],
+                    borderWidth: 1,
+                    tension: 0.5,
+                    parsing: {
+                        xAxisKey: 'date',
+                        yAxisKey: 'value'
+                    }
+                }, {
+                    label: 'Weight (lbs)',
+                    data: weightData,
+                    backgroundColor: [
+                        'rgba(255, 255, 132, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 255, 132, 1)',
+                    ],
+                    borderWidth: 1,
+                    tension: 0.5,
+                    parsing: {
+                        xAxisKey: 'date',
+                        yAxisKey: 'value'
+                    }
+                }, {
+                    label: 'Water (Oz.)',
+                    data: waterData,
+                    backgroundColor: [
+                        'rgba(25, 255, 255, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(25, 255, 255, 1)',
+                    ],
+                    borderWidth: 1,
+                    tension: 0.5,
+                    parsing: {
+                        xAxisKey: 'date',
+                        yAxisKey: 'value'
+                    }
+                }, {
+                    label: 'Exercise (min)',
+                    data: exerciseData,
+                    backgroundColor: [
+                        'rgba(255, 255, 25, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 255, 25, 1)',
+                    ],
+                    borderWidth: 1,
+                    tension: 0.5,
+                    parsing: {
+                        xAxisKey: 'date',
+                        yAxisKey: 'value'
+                    }
+                }, {
+                    label: 'Sleep (hours)',
+                    data: sleepData,
+                    backgroundColor: [
+                        'rgba(25, 25, 255, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(25, 25, 255, 1)',
+                    ],
+                    borderWidth: 1,
+                    tension: 0.5,
+                    parsing: {
+                        xAxisKey: 'date',
+                        yAxisKey: 'value'
+                    }
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        //default to week view
+                        min: weekViewDate,
+                        max: currentDate,
+                        type: 'time',
+                        //formats x axis scale (one day increments) and display (month, day, year)
+                        time: {
+                            unti: 'day',
+                            displayFormats: {
+                                day: 'MM/dd/yy'
                             }
+
                         },
-                        y: {
-                            beginAtZero: true
+                        ticks: {
+                            autoSkip: false,
+                            major: {
+                                enabled: true
+                            },
+                            color: "#FFFFFF"
+                        },
+                        grid: {
+                            color: "#FFFFFF",
+                            borderColor: "#FFFFFF"
+                        }
+                    },
+                    y: {
+                        max: 600,
+                        beginAtZero: true,
+                        grid: {
+                            color: "#FFFFFF",
+                            borderColor: "#FFFFFF"
+                        },
+                        ticks: {
+                            color: "#FFFFFF"
                         }
                     }
-                }
-            });
-        </script>
-    </body>
-</html>
 
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#FFFFFF'
+
+                        }
+                    }
+                },
+                onClick: (evt, activeElements, chart) => {
+                    console.log(activeElements[0]);
+                    console.log(activeElements[0].element);
+                }
+            }
+        });
+        setMax(myChart);
+        myChart.update();
+    </script>
+</body>
+
+</html>
