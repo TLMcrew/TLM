@@ -76,6 +76,39 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     </style>
 </head>
 <body>
+<header>
+      <nav class="navbar">
+        <a href="../public_html/dashboard.html" class="navBrand">TLM</a>
+        <ul class="navMenu">
+          <li class="navItem">
+            <a href="../public_html/dashboard.html" class="navLink"
+              >Dashboard</a
+            >
+          </li>
+          <li class="navItem">
+            <a href="../public_html/graphs.html" class="navLink">Graphs</a>
+          </li>
+          <li class="navItem">
+            <a href="../public_html/meals.html" class="navLink">Meals</a>
+          </li>
+          <li class="navItem">
+            <a href="../public_html/calendar.html" class="navLink">Calendar</a>
+          </li>
+          <li class="navItem">
+            <a href="../public_html/faq.html" class="navLink">FAQ</a>
+          </li>
+          <li class="navItem">
+            <a href="../public_html/landing.html" class="navLink">Logout</a>
+          </li>
+        </ul>
+        <div class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </nav>
+    </header>
+    <script src="../js/hamburger.js"></script>
     <div class="wrapper">
         <h2>Login</h2>
         <p>Please fill in your credentials to login.</p>
