@@ -73,7 +73,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     
 </head>
 <body>
-<header>
+    <header>
       <nav class="navbar">
         <a href="../public_html/dashboard.html" class="navBrand">TLM</a>
         <ul class="navMenu">
@@ -105,7 +105,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         </div>
       </nav>
     </header>
-    <script src="../js/hamburger.js"></script>
+    <script src="hamburger.js"></script>
     <div class="loginRegister">
       <div class="login">
         <h1>Login</h1>
