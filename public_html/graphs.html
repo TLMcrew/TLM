@@ -187,11 +187,18 @@
         }
 
         function setMax(chart) {
-            myValues.sort();
+            myValues.sort(function (a, b) {
+                return a - b;
+            });
             let lastInd = myValues.length - 1;
-            chart.options.scales.y.max = myValues[lastInd] + (myValues[lastInd] / 5);
-            console.log(chart.options.scales.y.max);
-
+            let max = myValues[lastInd] + (myValues[lastInd] / 5);
+            if (!isNaN(max)) {
+                let modStuff = max % 10;
+                if (modStuff != 0) {
+                    max = max + (10 - modStuff);
+                }
+                chart.options.scales.y.max = max;
+            }
         }
 
         //Got too lost in my original graph function, moved work here for clarity
@@ -250,56 +257,7 @@
                         break;
                 }
 
-
-                /*
-                if (myLabels.includes(myDate)) {
-                    myValues[myLabels.indexOf(myDate)] += parseFloat(val);
-                } else {
-                    myLabels.push(myDate);
-                    myValues.push(parseFloat(val));
-                }
-                myData = myLabels.map(function (d, i) {
-                    return {
-                        date: d,
-                        value: myValues[i] || 0
-                    };
-                });
-                //myData.push({date: myDate, value: val});
-
-                console.log(myData);
-                let mySortedData = myData.sort(function (a, b) {
-                    const dateA = a.date;
-                    const dateB = b.date;
-                    if (dateA < dateB) {
-                        return -1;
-                    }
-                    if (dateB < dateA) {
-                        return 1
-                    }
-                    return 0;
-                });
-                console.log(mySortedData);
-                // let myLabelsInstance = [];
-                // let myValuesInstance = [];
-
-
-                mySortedData.forEach(function (d) {
-                    addData(myChart, d.date, d.value);
-                    /*
-                    myLabelsInstance.push(d.date)
-                    myValuesInstance.push(d.value);
-                    
-                });
-
-                // myLabels = myLabelsInstance;
-                // myValues = myValuesInstance;
-                document.getElementById("timeView").options[3].click();
-                //updateFullScale(myChart);
-                let myValuesCopy = myValues;
-                myChart.options.scales.y.max = myValuesCopy.sort()[myValuesCopy.length - 1] + 15;
-                */
                 myChart.update();
-                //removeData(myChart);
             }
         }
 
@@ -431,8 +389,23 @@
                     legend: {
                         labels: {
                             color: '#FFFFFF'
+                        },
+                        onClick(t, e, i) {
+                            const s = e.datasetIndex, n = i.chart;
+                            n.isDatasetVisible(s) ? (n.hide(s), e.hidden = !0) : (n.show(s), e.hidden = !1);
+                            for(let dataPoint of n.data.datasets[s].data){
+                                console.log(dataPoint);
+                                let ind = myValues.indexOf(dataPoint.value);
+                                myValues.slice(ind, ind+1);
+                                setMax(n);
 
+                            }
+                            
                         }
+                        // onClick: (evt, legendItem) => {
+                        //     //legendItem.hidden = true;
+                        //     console.log(legendItem);
+                        // }
                     }
                 },
                 onClick: (evt, activeElements, chart) => {
