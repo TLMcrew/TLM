@@ -91,7 +91,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <a href="/~logan/graphs.php" class="navLink">Graphs</a>
           </li>
           <li class="navItem">
-            <a href="/~logan/meals.php>" class="navLink">Meals</a>
+            <a href="/~logan/meals.php" class="navLink">Meals</a>
           </li>
           <li class="navItem">
             <a href="/~logan/calendar.php" class="navLink">Calendar</a>
