@@ -43,7 +43,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
         //run the query
         $result = $link->query($sql);
-        if($result === false){
+        if($result == false){
             echo "query failed";
         }
         $data = mysqli_fetch_assoc($result);
