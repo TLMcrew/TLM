@@ -3,6 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
+=======
 -- Generation Time: Mar 31, 2022 at 08:57 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
@@ -26,6 +27,7 @@ USE `app`;
 -- --------------------------------------------------------
 
 --
+=======
 -- Table structure for table `userdata` a
 --
 
@@ -73,6 +75,7 @@ CREATE TABLE `users` (
 --
 -- Dumping data for table `users`
 --
+
 
 INSERT INTO `users` (`user_id`, `firstname`, `lastname`, `email`, `dob`, `username`, `password`) VALUES
 (1, 'Logan', 'Grisham', 'lgrisham@my.apsu.edu', '1997-04-30', 'lgrisham', 'lgrisham123'),

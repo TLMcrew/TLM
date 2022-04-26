@@ -1,0 +1,348 @@
+/* ------------GLOBAL STYLES------------ */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: white;
+}
+body {
+  background-color: #1e2328;
+}
+
+h1 {
+  text-align: center;
+}
+
+
+/* ------------LOGIN STYLES------------ */
+/* .loginRegister {                *Maybe use later*
+
+} */
+.login{
+  position: absolute;
+  top: 55%;
+  left: 25%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  background: #2a2e34;
+  border-radius: 10px;
+  box-shadow: 10px 10px 15px rgba(0,0,0,0.05);
+  padding-bottom: 40px;
+}
+.login h1{
+  text-align: center;
+  padding: 20px 0;
+  color: white;
+  border-bottom: 1px solid silver;
+}
+.login form{
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+.register{
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 55%;
+  left: 65%;
+  width: 700px;
+  background: #2a2e34;
+  border-radius: 10px;
+  box-shadow: 10px 10px 15px rgba(0,0,0,0.05);
+  padding-bottom: 40px;
+}
+.register h1{
+  text-align: center;
+  padding: 20px 0;
+  color: white;
+  border-bottom: 1px solid silver;
+}
+.register form{
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+form .txt_field{
+  position: relative;
+  border-bottom: 2px solid #adadad;
+  margin: 30px 0;
+}
+.register .txt_field input{
+  width: 50%;
+  padding: 0 5px;
+  height: 40px;
+  font-size: 16px;
+  border: none;
+  background: none;
+  outline: none;
+}
+.login .txt_field input{
+  width: 100%;
+  padding: 0 5px;
+  height: 40px;
+  font-size: 16px;
+  border: none;
+  background: none;
+  outline: none;
+}
+.txt_field label{
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  color: #adadad;
+  transform: translateY(-50%);
+  font-size: 16px;
+  pointer-events: none;
+  transition: .5s;
+}
+.txt_field span::before{
+  content: '';
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: #f5b301;
+  transition: .5s;
+}
+.txt_field input:focus ~ label,
+.txt_field input:valid ~ label{
+  top: -5px;
+  color: white;
+}
+.txt_field input:focus ~ span::before,
+.txt_field input:valid ~ span::before{
+  width: 100%;
+}
+.pass{
+  margin: -5px 0 20px 5px;
+  cursor: pointer;
+}
+.pass:hover{
+  text-decoration: underline;
+}
+input[type="submit"]{
+  width: 100%;
+  height: 50px;
+  border: 1px solid;
+  background:#f5b301;
+  border-radius: 25px;
+  font-size: 18px;
+  color: #e9f4fb;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+}
+input[type="submit"]:hover{
+  border-color: #f5b301;
+  transition: .5s;
+}
+.signup_link{
+  margin: 30px 0;
+  text-align: center;
+  font-size: 16px;
+  color: #666666;
+}
+.signup_link a{
+  color: #f5b301;
+  text-decoration: none;
+}
+.signup_link a:hover{
+  text-decoration: underline;
+}
+
+
+/*------------HEADER/HAMBURGER STYLES------------*/
+header {
+  background-color: #2a2e34;
+  box-shadow: 10px 10px 15px rgba(0,0,0,0.05);
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+.navbar {
+  min-height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+}
+
+.navMenu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 60px;
+  z-index:12;
+}
+
+.navBrand {
+  font-size: 2rem;
+}
+
+.navLink {
+  transition: 0.7s ease;
+}
+
+.navLink:hover {
+  color: #f5b301;
+}
+
+.hamburger {
+  display: none;
+  cursor: pointer;
+}
+
+.bar {
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin: 5px auto;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  background-color: white;
+}
+
+@media (max-width: 100000px) {
+  .hamburger {
+    display: block;
+  }
+
+  .hamburger.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .hamburger.active .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  .navMenu {
+    position: fixed;
+    left: 100%;
+    top: 70px;
+    gap: 0;
+    flex-direction: column;
+    background-color: #2a2e34;
+    width: 10%;
+    text-align: center;
+    transition: 0.3s;
+  }
+
+  .navItem {
+    margin: 16px 0;
+  }
+
+  .navMenu.active {
+    left: 90%;
+    box-shadow: 10px 10px 15px rgba(0,0,0,0.05);
+    border-radius: 2px;
+  }
+}
+
+
+/* ------------DASHBOARD BOXES------------ */
+.widgets {
+  display: inline-flex;
+  padding-top: 50px;
+}
+
+.weatherAndCalendar {
+  display: block;
+}
+
+.graphs {
+  border-style: solid;
+  border-radius: 25px;
+  border-width: 7px;
+  border-color: #d19900;
+  width: 31em;
+  height: 31em;
+  margin: 8px;
+}
+
+.circles {
+  border-style: solid;
+  border-radius: 25px;
+  border-width: 7px;
+  border-color: #d19900;
+  width: 31em;
+  height: 31em;
+  margin: 8px;
+}
+
+.weather {
+  border-style: solid;
+  border-radius: 25px;
+  border-width: 7px;
+  border-color: #d19900;
+  width: 31em;
+  height: 15.3em;
+  margin: 8px;
+}
+
+.calendar {
+  border-style: solid;
+  border-radius: 25px;
+  border-width: 7px;
+  border-color: #d19900;
+  width: 31em;
+  height: 15.3em;
+  margin: 8px;
+}
+
+
+/* -----------LOGIN PAGE------------ */
+.loginBox {
+  border: black;
+  border-style: solid;
+  border-width: 7px;
+  border-color: #d19900;
+  width: 50em;
+  height:35em;
+  position: absolute;
+  top: 30%;
+  left: 33%;
+  margin: -100px 0 0 -150px;
+  z-index: 12;
+}
+
+.img {
+}
+
+/* -----------GRAPHS PAGE------------ */
+form {
+  color: black;
+}
+
+#myChart {
+  border-color: white;
+  display: block;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#myGraph{
+  float: left;
+  display: block;
+  width: 48%;
+  align-content: center;
+  border-color: white;
+  border-style: solid; 
+  border-width: 1px;
+  margin: 1%;
+}
+
+.halfPage {
+  width: 48%;
+  float: right;
+  margin: 1%;
+}

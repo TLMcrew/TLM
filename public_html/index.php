@@ -1,3 +1,4 @@
+
 <?php
 require ("../systemData.php");
     
@@ -8,16 +9,17 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     exit;
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 
 <head>
+<meta charset="utf-8">
     <title> Total Life manager </title>
 </head>
 
 <body>
     <h1>
+
         welcome 
     </h1>
     <h2 class ="helloClass">
@@ -28,6 +30,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <p>
         <a href = "logout.php" class="btn btn-danger m1-3">Sign out. </a>
     </p>
+
 </body>
 
 </html>
