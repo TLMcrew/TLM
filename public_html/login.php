@@ -48,7 +48,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
         $data = mysqli_fetch_assoc($result);
         $count = $data['TOTAL'];
-        if($count == 1){
+        if($count > 0){
             session_start();
             $_SESSION["loggedin"] = true;
             $_SESSION["id"] = $id;
