@@ -121,7 +121,7 @@ if(isset($_POST['submit'])){
             <label>Username</label>
           </div>
           <div class="txt_field">
-            <input type="password" required />
+            <input type="password" name="password" required />
             <span></span>
             <label>Password</label>
           </div>
