@@ -17,8 +17,8 @@ $username = $password = "";
 $username_err = $password_err = $login_err = "";
  
 // Processing form data when form is submitted
-//if($_SERVER["REQUEST_METHOD"] == "POST"){
-if(isset($_POST['submit'])){
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+//if(isset($_POST['submit'])){
   $username = $_POST['username'];
   $password = $_POST['password'];
  
