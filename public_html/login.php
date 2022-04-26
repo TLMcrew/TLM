@@ -114,9 +114,9 @@ if(isset($_POST['submit'])){
     <div class="loginRegister">
       <div class="login">
         <h1>Login</h1>
-        <form action="login.php" method="post">
+        <form method="post">
           <div class="txt_field">
-            <input type="text" required />
+            <input type="text" name="username" required />
             <span></span>
             <label>Username</label>
           </div>
@@ -135,7 +135,7 @@ if(isset($_POST['submit'])){
         <form method="post">
           <div class = "username">
           <div class="txt_field">
-            <input type="text" required />
+            <input type="text" name="password" required />
             <span></span>
             <label>Username</label>
           </div>
