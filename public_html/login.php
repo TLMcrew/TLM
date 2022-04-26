@@ -31,15 +31,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $password_err = "Please enter your password.";
     } else{
         $password = trim($_POST["password"]);
-     }
-     if(isset($_POST['submit'])){
-   // if(empty($username_err) && empty($password_err)){
+    }
+    if(empty($username_err) && empty($password_err)){
        //sql statement
         $sql = "SELECT COUNT(*) AS TOTAL FROM users WHERE username = '" . $username . "' AND 
         password = '" . $password . "'";
         //connect to db
         $link = mysqli_connect($DB_SERVER,$DB_USER,$DB_PASSWORD,$DB_NAME);
-        if($link === false){
+        if($link == false){
             die("ERROR: Could not connect. " . mysqli_connect_error());
         }
         //run the query
