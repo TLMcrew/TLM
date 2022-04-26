@@ -3,7 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 22, 2022 at 07:59 PM
+=======
+-- Generation Time: Mar 31, 2022 at 08:57 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
 
@@ -26,7 +27,8 @@ USE `app`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `userdata`
+=======
+-- Table structure for table `userdata` a
 --
 
 DROP TABLE IF EXISTS `userdata`;
@@ -65,17 +67,20 @@ CREATE TABLE `users` (
   `firstname` varchar(255) NOT NULL,
   `lastname` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `dob` date NOT NULL
+  `dob` date NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `firstname`, `lastname`, `email`, `dob`) VALUES
-(1, 'Logan', 'Grisham', 'lgrisham@my.apsu.edu', '1997-04-30'),
-(2, 'Sebastian', 'Hardesty', 'shardesty@my.apsu.edu', '2000-06-05'),
-(3, 'Stephen', 'Johnson', 'sjohnson155@my.apsu.edu', '2000-08-11');
+
+INSERT INTO `users` (`user_id`, `firstname`, `lastname`, `email`, `dob`, `username`, `password`) VALUES
+(1, 'Logan', 'Grisham', 'lgrisham@my.apsu.edu', '1997-04-30', 'lgrisham', 'lgrisham123'),
+(2, 'Sebastian', 'Hardesty', 'shardesty@my.apsu.edu', '2000-06-05', 'shardesty', 'shardesty123'),
+(3, 'Stephen', 'Johnson', 'sjohnson155@my.apsu.edu', '2000-08-11', 'sjohnson', 'sjohnson123');
 
 --
 -- Indexes for dumped tables
