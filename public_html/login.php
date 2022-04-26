@@ -116,12 +116,12 @@ if(isset($_POST['submit'])){
         <h1>Login</h1>
         <form method="post">
           <div class="txt_field">
-            <input type="text" name="username" required />
+            <input type="text" name="username" id="username" required />
             <span></span>
             <label>Username</label>
           </div>
           <div class="txt_field">
-            <input type="password" name="password" required />
+            <input type="password" name="password" id="username" required />
             <span></span>
             <label>Password</label>
           </div>
