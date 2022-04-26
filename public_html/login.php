@@ -62,6 +62,7 @@ if(isset($_POST['submit'])){
             $login_err = "Invalid username or password.";
         }
         mysqli_close($link);
+        echo "link closed";
         
     }else
     echo "login Failed";
