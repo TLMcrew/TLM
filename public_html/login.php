@@ -5,7 +5,7 @@ session_start();
 
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: welcome.php");
+    header("location: dashboard.html");
     exit;
 }
 
@@ -17,7 +17,10 @@ $username = $password = "";
 $username_err = $password_err = $login_err = "";
  
 // Processing form data when form is submitted
-if($_SERVER["REQUEST_METHOD"] == "POST"){
+//if($_SERVER["REQUEST_METHOD"] == "POST"){
+if(isset($_POST['submit'])){
+  $username = $_POST['username'];
+  $password = $_POST['password'];
  
     // Check if username is empty
     if(empty(trim($_POST["username"]))){
@@ -61,7 +64,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         mysqli_close($link);
         
     }else
-    echo "get absolutely smacked lad";
+    echo "login Failed";
 }
 ?>
 
