@@ -32,7 +32,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     } else{
         $password = trim($_POST["password"]);
      }
-    if(empty($username_err) && empty($password_err)){
+     if(isset($_POST['submit'])){
+   // if(empty($username_err) && empty($password_err)){
        //sql statement
         $sql = "SELECT COUNT(*) AS TOTAL FROM users WHERE username = '" . $username . "' AND 
         password = '" . $password . "'";
