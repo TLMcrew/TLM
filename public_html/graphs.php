@@ -61,7 +61,7 @@
         <div id="bioInfo">
         <h3>Biometric Information</h3>
         <form name="bioInfo" action="javascript:updateBio();">
-            <p>Height (cm):</p>
+            <p>Height (in.):</p>
             <input id="height" type="text"></input>
             <!-- <p>Weight:</p>
             <input id="weight" type="text"></input> -->
