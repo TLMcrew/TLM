@@ -480,6 +480,7 @@
                         // }
                     }
                 },
+                //will be used for removal of data in Future Work
                 onClick: (evt, activeElements, chart) => {
                     if(activeElements[0] != null){
                         console.log(activeElements[0]);
