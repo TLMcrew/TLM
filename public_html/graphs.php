@@ -61,8 +61,11 @@
         <div id="bioInfo">
         <h3>Biometric Information</h3>
         <form name="bioInfo" action="javascript:updateBio();">
+            <p>Height (cm):</p>
             <input id="height" type="text"></input>
-            <input id="weight" type="text"></input>
+            <!-- <p>Weight:</p>
+            <input id="weight" type="text"></input> -->
+            <p>Weight Goal (lbs.):</p>
             <input id="weightGoal" type="text"></input>
             <input type="submit" value="Update Information">
         </form>
@@ -70,18 +73,20 @@
         <div id="graphInput">
         <h3>Graph Data</h3>
         <form name="graphInput" action="javascript:graph();">
+            <p>Date:</p>
             <input type="date" id="inputDate" min="1903-01-20" max="">
+            <p>Value:</p>
             <input type="text" id="val">
             <input type="submit" value="Add to Graph">
         </form>
-
+        <span>Scale:</span>
         <select name="view" id="timeView">
             <option value="week" onclick="javascript:updateWeekScale(myChart)">Week View</option>
             <option value="month" onclick="javascript:updateMonthScale(myChart)">Month View</option>
             <option value="year" onclick="javascript:updateYearScale(myChart)">Year View</option>
             <option value="allTime" onclick="javascript:updateFullScale(myChart)">All Time View</option>
         </select>
-
+        <span>Dataset</span>
         <select name="dataSet" id="dataSet">
             <option value="cal">Calories</option>
             <option value="weight">Weight</option>
@@ -90,6 +95,7 @@
             <option value="exercise">Exercise Time</option>
         </select>
         </div>
+        <br>
         <!-- Updates all info in the database -->
         <button type="button" onclick="saveData()">Save Changes</button>
     <!-- </div> -->
@@ -106,10 +112,32 @@
         let sleepData = [];
         let exerciseData = [];
 
+        //Biometric info
+        let height, weightGoal;
         /**
-         * Code to fill these arrays with data from the database
+         * Code to fill these arrays and height and weightgoal with data from the database
          * goes here
+         * 
         */
+        if(typeof height != 'undefined'){
+            document.getElementById("height").value = height;
+        }
+        if(typeof weightGoal != 'undefined'){
+            document.getElementById("weightGoal").value = weightGoal;
+        }
+        function updateBio(){
+            let h = parseFloat(document.getElementById("height").value);
+            if(!isNaN(h)){
+                height = h;
+            }
+            let w = parseFloat(document.getElementById("weightGoal").value);
+            if(!isNaN(w)){
+                weightGoal = w;
+            }
+            console.log(height + ' ' + weightGoal);
+
+            //send stuff to DB
+        }
 
         for (let x of calData) { myValues.push(x.value); }
         for (let x of weightData) { myValues.push(x.value); }
@@ -250,7 +278,12 @@
             });
         }
 
-        //
+        function saveData(){
+            //sends everything to the database
+        }
+
+        //Pulls the values from the form, checks that the input is a number
+        //uses switch to send to correct array
         function graph() {
             let dataSet = document.getElementById('dataSet').value;
             let myDate = document.graphInput.inputDate.value;
@@ -382,7 +415,6 @@
                             displayFormats: {
                                 day: 'MM/dd/yy'
                             }
-
                         },
                         ticks: {
                             autoSkip: false,
@@ -462,5 +494,3 @@
 </body>
 
 </html>
-
-
