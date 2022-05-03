@@ -57,18 +57,22 @@
     </div>
     <br>
 
-    <div class="halfPage">
+    <!-- <div class="halfPage"> -->
+        <div id="bioInfo">
+        <h3>Biometric Information</h3>
         <form name="bioInfo" action="javascript:updateBio();">
             <input id="height" type="text"></input>
             <input id="weight" type="text"></input>
             <input id="weightGoal" type="text"></input>
             <input type="submit" value="Update Information">
         </form>
-
+        </div>
+        <div id="graphInput">
+        <h3>Graph Data</h3>
         <form name="graphInput" action="javascript:graph();">
             <input type="date" id="inputDate" min="1903-01-20" max="">
             <input type="text" id="val">
-            <input type="submit">
+            <input type="submit" value="Add to Graph">
         </form>
 
         <select name="view" id="timeView">
@@ -85,8 +89,10 @@
             <option value="sleep">Hours Slept</option>
             <option value="exercise">Exercise Time</option>
         </select>
+        </div>
+        <!-- Updates all info in the database -->
         <button type="button" onclick="saveData()">Save Changes</button>
-    </div>
+    <!-- </div> -->
     <script>
         //Testing arrays that may be used in final, still trying to figure out how to use Chart.js
         let myLabels = [];
@@ -94,12 +100,7 @@
         let myData = [];
 
         //User data arrays
-        let calData = [
-            // { date: new Date(2022, 2, 13), value: 200 },
-            // { date: new Date(2022, 2, 14), value: 180 },
-            // {date: new Date(2022, 3, 2), value: 190},
-            // {date: new Date(2022, 3, 6), value: 180}
-        ];
+        let calData = [];
         let weightData = [];
         let waterData = [];
         let sleepData = [];
@@ -140,14 +141,14 @@
         let yearViewDate = new Date(currentDate);
         yearViewDate.setDate(yearViewDate.getDate() - 365);
 
-        //adds data to a chart, probably will be changed dramatically
-        function addData(chart, label, data) {
-            chart.data.labels.push(label);
-            chart.data.datasets.forEach((dataset) => {
-                dataset.data.push(data);
-            });
-            chart.update();
-        }
+        // //adds data to a chart, probably will be changed dramatically
+        // function addData(chart, label, data) {
+        //     chart.data.labels.push(label);
+        //     chart.data.datasets.forEach((dataset) => {
+        //         dataset.data.push(data);
+        //     });
+        //     chart.update();
+        // }
 
         //removes data from a chart, definitely will be changed dramatically
         function removeData(chart) {
@@ -200,17 +201,38 @@
                     max = max + (10 - modStuff);
                 }
                 chart.options.scales.y.max = max;
+                chart.update();
             }
         }
 
         //Got too lost in my original graph function, moved work here for clarity
         //Pushes a date and value into an array and then sorts by date
         function dataUpdateFunction(daDate, numberValue, dataSet) {
-            dataSet.push({ date: daDate, value: numberValue });
+            let ind = -1;
+            let inputDateCheck = new Date(daDate);
+            for (let dataPoint of dataSet){
+                let dateCheck = new Date(dataPoint.date);
+                if(dateCheck.getTime() === inputDateCheck.getTime()){
+                    ind = dataSet.indexOf(dataPoint);
+                }
+            }
+            if(ind >= 0){
+                myValues.splice(myValues.indexOf(dataSet[ind].value), 1);
+                dataSet[ind].value = dataSet[ind].value + numberValue;
+                myValues.push(dataSet[ind].value);
+            }else{
+                dataSet.push({ date: daDate, value: numberValue });
+                myValues.push(numberValue);
+            }
             dataDateSort(dataSet);
-            myValues.push(numberValue);
-
+            
             setMax(myChart);
+            myChart.update();
+            // dataSet.push({ date: daDate, value: numberValue });
+            // dataDateSort(dataSet);
+            // myValues.push(numberValue);
+
+            // setMax(myChart);
         }
 
         //sorts arrays by a date variable
@@ -228,7 +250,7 @@
             });
         }
 
-        //a fucking mess
+        //
         function graph() {
             let dataSet = document.getElementById('dataSet').value;
             let myDate = document.graphInput.inputDate.value;
@@ -239,23 +261,23 @@
                 switch (dataSet) {
                     case "cal":
                         dataUpdateFunction(myDate, numVal, calData);
-                        console.log(calData);
+                        //console.log(calData);
                         break;
                     case "weight":
                         dataUpdateFunction(myDate, numVal, weightData);
-                        console.log(weightData);
+                        //console.log(weightData);
                         break;
                     case "water":
                         dataUpdateFunction(myDate, numVal, waterData);
-                        console.log(waterData);
+                        //console.log(waterData);
                         break;
                     case "sleep":
                         dataUpdateFunction(myDate, numVal, sleepData);
-                        console.log(sleepData);
+                        //console.log(sleepData);
                         break;
                     case "exercise":
                         dataUpdateFunction(myDate, numVal, exerciseData);
-                        console.log(exerciseData);
+                        //console.log(exerciseData);
                         break;
                 }
 
@@ -392,17 +414,33 @@
                         labels: {
                             color: '#FFFFFF'
                         },
-                        onClick(t, e, i) {
-                            const s = e.datasetIndex, n = i.chart;
+                        //hides the line when a legend box is clicked and removes the values from myValues to update the max
+                        //reveals the line when a legend box is clicked and and adds the data back into myValues
+                        onClick(e, legendItem, legend) {
+                            const index = legendItem.datasetIndex, chart = legend.chart;
+                            if (chart.isDatasetVisible(index)) {
+                                chart.hide(index);
+                                legendItem.hidden = !0;
+                                for (let dataPoint of chart.data.datasets[index].data) {
+                                    //console.log(dataPoint.value);
+                                    let ind = myValues.indexOf(dataPoint.value);
+                                    myValues.splice(ind, 1);
+                                }
+                            } else {
+                                chart.show(index);
+                                legendItem.hidden = !1;
+                                for (let dataPoint of chart.data.datasets[index].data) {
+                                    myValues.push(dataPoint.value);
+                                }
+                            }
+                            /*
                             n.isDatasetVisible(s) ? (n.hide(s), e.hidden = !0) : (n.show(s), e.hidden = !1);
-                            for(let dataPoint of n.data.datasets[s].data){
+                            for (let dataPoint of n.data.datasets[s].data) {
                                 console.log(dataPoint);
                                 let ind = myValues.indexOf(dataPoint.value);
-                                myValues.slice(ind, ind+1);
-                                setMax(n);
-
-                            }
-                            
+                                myValues.slice(ind, ind + 1);
+                            }*/
+                            setMax(chart);
                         }
                         // onClick: (evt, legendItem) => {
                         //     //legendItem.hidden = true;
@@ -411,8 +449,10 @@
                     }
                 },
                 onClick: (evt, activeElements, chart) => {
-                    console.log(activeElements[0]);
-                    console.log(activeElements[0].element);
+                    if(activeElements[0] != null){
+                        console.log(activeElements[0]);
+                        console.log(activeElements[0].element);
+                    }
                 }
             }
         });
@@ -422,4 +462,5 @@
 </body>
 
 </html>
+
 
