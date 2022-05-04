@@ -176,11 +176,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
       let exerciseDonutData = [0, dailyExer];
       let sleepDonutData = [0, dailySleep];
 
-      
-
       function fillDonut(dataArray, donutArray, donut, constant){
         for (let dataPoint of dataArray){
           let dateCheck = new Date(dataPoint.date);
+          
           if(dateCheck.getDate() == new Date().getDate()){
             if((donutArray[0] + dataPoint.value) >= constant){
               donutArray[0] = constant;
@@ -198,6 +197,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         }
         donut.update();
       }
+      
       function changeGraph(){
         let set = document.getElementById('dataSet').value;
         let myValues = [];
@@ -219,8 +219,15 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         let yMax = myValues[0] + (myValues[0] / 5);
 
         myDates.sort(function (a, b) {
-          return a - b;
+          if (a < b) {
+            return -1;
+          }
+          if (b < a) {
+            return 1
+          }
+          return 0;
         });
+        
         let xMin = new Date(myDates[0]);
         xMin.setDate(xMin.getDate()-7);
 
