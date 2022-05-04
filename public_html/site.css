@@ -276,6 +276,7 @@ a {
   margin-top: 0 !important; 
   border: none;
   color: black;
+  display: flex;
 }
 .circles {
   border-style: solid;

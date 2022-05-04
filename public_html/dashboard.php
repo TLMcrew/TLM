@@ -60,6 +60,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         <!-- <a href="/~logan/graphs.php" class="navLink"> -->
           <canvas id="widgetGraph" width="350" height="320" class = "graphDisplay"></canvas>
         <!-- </a>  -->
+
         <select name="dataSet" id="dataSet" class = "dashboardData">
             <option value="cal">Calories</option>
             <option value="weight">Weight</option>
