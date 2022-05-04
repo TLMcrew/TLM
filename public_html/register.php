@@ -1,6 +1,6 @@
 <?php
 // Include config file
-require ("../systemData.php");
+require ("./~logan/systemData.php");
  
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = "";

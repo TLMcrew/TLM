@@ -1,6 +1,6 @@
 
 <?php
-require ("../systemData.php");
+require ("./~logan/systemData.php");
     
 session_start();
 
