@@ -57,10 +57,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <!-- Widgets -->
     <div class="widgets">
       <div class="graphs">
-        <!-- <a href="/~logan/graphs.php" class="navLink"> -->
           <canvas id="widgetGraph" width="350" height="320" class = "graphDisplay"></canvas>
-        <!-- </a>  -->
-        <select name="dataSet" id="dataSet" class = "dashboardData">
+        <select name="dataSet" id="dataSet" class = "graphsDropdown">
             <option value="cal">Calories</option>
             <option value="weight">Weight</option>
             <option value="water">Water Intake</option>
@@ -157,6 +155,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     </div>
     </div>
     <script>
+      document.getElementById("widgetGraph").onclick = function(e){
+        window.location.href = 'graphs.php';
+      };
       let currentDate = new Date();
       let calData = [
         {date: new Date(2021, 11, 19), value: 100}, {date: new Date(2021, 11, 30), value: 200},
