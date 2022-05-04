@@ -125,6 +125,7 @@
         if(typeof weightGoal != 'undefined'){
             document.getElementById("weightGoal").value = weightGoal;
         }
+        
         function updateBio(){
             let h = parseFloat(document.getElementById("height").value);
             if(!isNaN(h)){
