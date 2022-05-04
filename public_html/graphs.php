@@ -292,7 +292,7 @@
             }else{
                 chart.options.scales.x.min = weekViewDate;
             }
-            
+
             chart.update();
         }
 
@@ -329,10 +329,10 @@
                     label: 'Weight (lbs)',
                     data: weightData,
                     backgroundColor: [
-                        'rgba(255, 255, 132, 0.2)'
+                        'rgba(255,165,0, 0.2)'
                     ],
                     borderColor: [
-                        'rgba(255, 255, 132, 1)',
+                        'rgba(255,165,0, 1)',
                     ],
                     borderWidth: 1,
                     tension: 0.5,
@@ -438,7 +438,6 @@
                                 chart.hide(index);
                                 legendItem.hidden = !0;
                                 for (let dataPoint of chart.data.datasets[index].data) {
-                                    //console.log(dataPoint.value);
                                     let ind = myValues.indexOf(dataPoint.value);
                                     myValues.splice(ind, 1);
                                     let ind2 = myDates.indexOf(dataPoint.date);
