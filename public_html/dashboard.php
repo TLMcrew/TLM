@@ -111,7 +111,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         {date: new Date(), value: 1200}, {date: new Date(), value: 400}
       ];
       let weightData = [{date: new Date(2021, 11, 30), value: 200}];
-      let waterData = [];
+      let waterData = [{date: new Date(), value: 30}];
       let sleepData = [];
       let exerciseData = [];
 
