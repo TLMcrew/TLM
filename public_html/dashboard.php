@@ -313,6 +313,19 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             }
         });
       
+      const counter = {
+        id: 'counter',
+        beforeDraw(chart, args, options){
+          const { ctx, chartArea: {top, right, bottom, left, width, height}} = chart;
+          ctx.save();
+          ctx.font = '30px "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillStyle = chart.data.datasets[0].borderColor[0];
+          ctx.fillText(chart.data.datasets[0].data[0], width / 2, top + (height/2));
+          ctx.restore();
+        }
+      }
+
       const ctx2 = document.getElementById('calDonut').getContext('2d');
       const calDonutGraph = new Chart(ctx2, {
         type: 'doughnut',
@@ -327,7 +340,14 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             ],
             borderColor: ['rgba(255, 99, 132, 1)'],
             borderWidth: 1,
+            cutout: [60]
           }]
+        },
+        plugins: [counter],
+        onClick: (evt, activeElements, chart) => {
+          if(activeElements[0] != null){
+             console.log(activeElements[0]);
+          }
         }
       });
 
@@ -345,8 +365,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             ],
             borderColor: ['rgba(25, 255, 255, 1)'],
             borderWidth: 1,
+            cutout: [60]
           }]
-        }
+        },
+        plugins: [counter]
       });
       const ctx4 = document.getElementById('exerciseDonut').getContext('2d');
       const exerciseDonutGraph = new Chart(ctx4, {
@@ -362,8 +384,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             ],
             borderColor: ['rgba(255, 255, 25, 1)'],
             borderWidth: 1,
+            cutout: [60]
           }]
-        }
+        },
+        plugins: [counter]
       });
 
       const ctx5 = document.getElementById('sleepDonut').getContext('2d');
@@ -380,8 +404,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             ],
             borderColor: ['rgba(25, 25, 255, 1)'],
             borderWidth: 1,
+            cutout: [60]
           }]
-        }
+        },
+        plugins: [counter]
       });
 
       fillDonut(calData, calDonutData, calDonutGraph, dailyCal);
