@@ -26,9 +26,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         <a href="/~logan/dashboard.php" class="navBrand">TLM</a>
         <ul class="navMenu">
           <li class="navItem">
-            <a href="/~logan/dashboard.php" class="navLink"
-              >Dashboard</a
-            >
+            <a href="/~logan/dashboard.php" class="navLink">Dashboard</a>
           </li>
           <li class="navItem">
             <a href="/~logan/graphs.php" class="navLink">Graphs</a>
@@ -58,7 +56,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <!-- Widgets -->
     <div class="widgets">
       <div class="graphs">
-        <canvas id="myChart" width="400" height="400"></canvas>
+        <!-- <a href="/~logan/graphs.php" class="navLink"> -->
+          <canvas id="widgetGraph" width="400" height="400"></canvas>
+        <!-- </a>  -->
         <select name="dataSet" id="dataSet">
             <option value="cal">Calories</option>
             <option value="weight">Weight</option>
@@ -67,24 +67,64 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             <option value="exercise">Exercise Time</option>
         </select>
       </div>
-      <div class="circles"></div>
+      <div class="circles">
+        <canvas id="calDonut" width="100" height="100"></canvas>
+        <canvas id="waterDonut" width="100" height="100"></canvas>
+        <canvas id="exerciseDonut"></canvas>
+        <canvas id="sleepDonut"></canvas>
+      </div>
       <div class="weatherAndCalendar">
         <div class="weather"></div>
         <div class="calendar"></div>
       </div>
     </div>
     <script>
+      let currentDate = new Date();
       let calData = [
-        //{date: new Date(2021, 11, 19), value: 100}, {date: new Date(2021, 11, 30), value: 200}
+        {date: new Date(2021, 11, 19), value: 100}, {date: new Date(2021, 11, 30), value: 200},
+        {date: new Date(), value: 1200}, {date: new Date(), value: 400}
       ];
       let weightData = [{date: new Date(2021, 11, 30), value: 200}];
       let waterData = [];
       let sleepData = [];
       let exerciseData = [];
+
       /**
          * Code to fill these arrays with data from the database 
         */
 
+      const dailyCal = 2000;
+      const dailyWater = 64;
+      const dailyExer = 60;
+      const dailySleep = 8;
+
+      let calDonutData = [0, dailyCal];
+      let waterDonutData = [0, dailyWater];
+      let exerciseDonutData = [0, dailyExer];
+      let sleepDonutData = [0, dailySleep];
+
+      
+
+      function fillDonut(dataArray, donutArray, donut, constant){
+        for (let dataPoint of dataArray){
+          let dateCheck = new Date(dataPoint.date);
+          if(dateCheck.getDate() == new Date().getDate()){
+            if((donutArray[0] + dataPoint.value) >= constant){
+              donutArray[0] = constant;
+              donutArray[1] = 0;
+              let color = String(donut.data.datasets[0].backgroundColor[0]);
+              
+              let indOfO = color.search('0');
+              color = color.slice(0, indOfO) + "1)";
+              donut.data.datasets[0].backgroundColor[0] = color;
+            }else{
+              donutArray[0] += dataPoint.value;
+              donutArray[1] -= dataPoint.value;
+            }
+          }
+        }
+        donut.update();
+      }
       function changeGraph(){
         let set = document.getElementById('dataSet').value;
         let myValues = [];
@@ -95,7 +135,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         eval('mySet ='+stringSet);
 
         if(mySet.length != 0){
-        myChart.data.datasets[0].data = mySet;
+        widgetGraph.data.datasets[0].data = mySet;
         
         for (let x of mySet) { myValues.push(x.value); }
         for (let x of mySet) { myDates.push(x.date); }
@@ -110,39 +150,15 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         });
         let xMin = new Date(myDates[0]);
         xMin.setDate(xMin.getDate()-7);
-        console.log(xMin);
 
-        myChart.options.scales.y.max = yMax;
-        myChart.options.scales.x.min = xMin;
-        /*
-        switch (dataSet) {
-                    case "cal":
-                        dataUpdateFunction(myDate, numVal, calData);
-                        //console.log(calData);
-                        break;
-                    case "weight":
-                        dataUpdateFunction(myDate, numVal, weightData);
-                        //console.log(weightData);
-                        break;
-                    case "water":
-                        dataUpdateFunction(myDate, numVal, waterData);
-                        //console.log(waterData);
-                        break;
-                    case "sleep":
-                        dataUpdateFunction(myDate, numVal, sleepData);
-                        //console.log(sleepData);
-                        break;
-                    case "exercise":
-                        dataUpdateFunction(myDate, numVal, exerciseData);
-                        //console.log(exerciseData);
-                        break;
-                }*/
-              }
-        myChart.update();
+          widgetGraph.options.scales.y.max = yMax;
+          widgetGraph.options.scales.x.min = xMin;
+        }
+        widgetGraph.update();
       }
 
-      const ctx = document.getElementById('myChart').getContext('2d');
-        const myChart = new Chart(ctx, {
+      const ctx = document.getElementById('widgetGraph').getContext('2d');
+      const widgetGraph = new Chart(ctx, {
             type: 'line',
             data: {
                 datasets: [{
@@ -206,10 +222,90 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         display: false
                     }
                 },
+              // onClick: (evt, activeElements, chart) => {
+                
+              // }
             }
         });
-        document.getElementById('dataSet').addEventListener("change", changeGraph);
-        changeGraph();
+      
+      const ctx2 = document.getElementById('calDonut').getContext('2d');
+      const calDonutGraph = new Chart(ctx2, {
+        type: 'doughnut',
+        data: {
+          labels: ['Calories'],
+          datasets: [{
+            label: "Calories",
+            data: calDonutData,
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(0, 0, 0, 0)'
+            ],
+            borderColor: ['rgba(255, 99, 132, 1)'],
+            borderWidth: 1,
+          }]
+        }
+      });
+
+      const ctx3 = document.getElementById('waterDonut').getContext('2d');
+      const waterDonutGraph = new Chart(ctx3, {
+        type: 'doughnut',
+        data: {
+          labels: ['Water'],
+          datasets: [{
+            label: "Ounces",
+            data: waterDonutData,
+            backgroundColor: [
+              'rgba(25, 255, 255, 0.2)',
+              'rgba(0, 0, 0, 0)'
+            ],
+            borderColor: ['rgba(25, 255, 255, 1)'],
+            borderWidth: 1,
+          }]
+        }
+      });
+      const ctx4 = document.getElementById('exerciseDonut').getContext('2d');
+      const exerciseDonutGraph = new Chart(ctx4, {
+        type: 'doughnut',
+        data: {
+          labels: ['Exercise'],
+          datasets: [{
+            label: "Minutes",
+            data: exerciseDonutData,
+            backgroundColor: [
+              'rgba(255, 255, 25, 0.2)',
+              'rgba(0, 0, 0, 0)'
+            ],
+            borderColor: ['rgba(255, 255, 25, 1)'],
+            borderWidth: 1,
+          }]
+        }
+      });
+
+      const ctx5 = document.getElementById('sleepDonut').getContext('2d');
+      const sleepDonutGraph = new Chart(ctx5, {
+        type: 'doughnut',
+        data: {
+          labels: ['Sleep'],
+          datasets: [{
+            label: "Hours",
+            data: sleepDonutData,
+            backgroundColor: [
+              'rgba(25, 25, 255, 0.2)',
+              'rgba(0, 0, 0, 0)'
+            ],
+            borderColor: ['rgba(25, 25, 255, 1)'],
+            borderWidth: 1,
+          }]
+        }
+      });
+
+      fillDonut(calData, calDonutData, calDonutGraph, dailyCal);
+      fillDonut(waterData, waterDonutData, waterDonutGraph, dailyWater);
+      fillDonut(exerciseData, exerciseDonutData, exerciseDonutGraph, dailyExer);
+      fillDonut(sleepData, sleepDonutData, sleepDonutGraph, dailySleep);
+
+      document.getElementById('dataSet').addEventListener("change", changeGraph);
+      changeGraph();
     </script>
   </body>
 </html>
