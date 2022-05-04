@@ -15,7 +15,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <meta charset="utf-8" />
     <title>Dashboard</title>
     <link rel="stylesheet" href="site.css" />
-    <script src = "/~logan/weather.js" defer></script>
+    <script src = "./weather.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.js"></script>
     <script
         src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
@@ -69,18 +69,22 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         </select>
       </div>
       <div class="circles">
-        <div class = "calDonut" style = "width: 100px; height: 100px;">
+        <div class="circleLeft">
+        <div class = "donutStyle">
           <canvas id="calDonut"></canvas>
         </div>
-        <div class = "waterDonut" style = "width: 100px; height: 100px;">
+        <div class = "donutStyle">
           <canvas id="waterDonut"></canvas>
         </div>
-        <div class = "exerciseDonut" style = "width: 100px; height: 100px;">
+      </div>    
+      <div class = "circleRight">
+        <div class = "donutStyle">
           <canvas id="exerciseDonut" ></canvas>
         </div>
-        <div class = "sleepDonut" style = "width: 100px; height: 100px;">
+        <div class = "donutStyle">
           <canvas id="sleepDonut"></canvas>
         </div>
+      </div>
       </div>
       <div class = "weather">
         <div class = "card">
