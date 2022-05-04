@@ -158,10 +158,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
       document.getElementById("widgetGraph").onclick = function(e){
         window.location.href = 'graphs.php';
       };
+
       let currentDate = new Date();
       let calData = [
         {date: new Date(2021, 11, 19), value: 100}, {date: new Date(2021, 11, 30), value: 200},
-        {date: new Date(), value: 1200}, {date: new Date(), value: 400}
+        {date: new Date(), value: 1200}, {date: new Date(), value: 1000}
       ];
       let weightData = [{date: new Date(2021, 11, 30), value: 200}];
       let waterData = [{date: new Date(), value: 30}];
@@ -188,7 +189,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
           
           if(dateCheck.getDate() == new Date().getDate()){
             if((donutArray[0] + dataPoint.value) >= constant){
-              donutArray[0] = constant;
               donutArray[1] = 0;
               let color = String(donut.data.datasets[0].backgroundColor[0]);
               
@@ -196,9 +196,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
               color = color.slice(0, indOfO) + "1)";
               donut.data.datasets[0].backgroundColor[0] = color;
             }else{
-              donutArray[0] += dataPoint.value;
               donutArray[1] -= dataPoint.value;
             }
+            donutArray[0] += dataPoint.value;
           }
         }
         donut.update();
@@ -322,8 +322,27 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
           ctx.font = '30px "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif';
           ctx.textAlign = 'center';
           ctx.fillStyle = chart.data.datasets[0].borderColor[0];
-          ctx.fillText(chart.data.datasets[0].data[0], width / 2, top + (height/2));
-          ctx.restore();
+          let num = chart.data.datasets[0].data[0];
+          let denom;
+          
+          switch(chart.data.labels[0]) {
+            case "Calories":
+              denom = dailyCal;
+              break;
+            case "Water":
+              denom = dailyWater;
+              break;
+            case "Exercise":
+              denom = dailyExer;
+              break;
+            case "Sleep":
+              denom = dailySleep;
+              break;
+            default:
+              denom = num + chart.data.datasets[0].data[1];
+          }
+
+          ctx.fillText(num + "/" + denom, width / 2, top + (height/2));
         }
       }
 
@@ -341,7 +360,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             ],
             borderColor: ['rgba(255, 99, 132, 1)'],
             borderWidth: 1,
-            cutout: [60]
+            cutout: [66]
           }]
         },
         plugins: [counter],
@@ -366,7 +385,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             ],
             borderColor: ['rgba(25, 255, 255, 1)'],
             borderWidth: 1,
-            cutout: [60]
+            cutout: [66]
           }]
         },
         plugins: [counter]
@@ -385,7 +404,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             ],
             borderColor: ['rgba(255, 255, 25, 1)'],
             borderWidth: 1,
-            cutout: [60]
+            cutout: [66]
           }]
         },
         plugins: [counter]
@@ -405,7 +424,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             ],
             borderColor: ['rgba(25, 25, 255, 1)'],
             borderWidth: 1,
-            cutout: [60]
+            cutout: [66]
           }]
         },
         plugins: [counter]
