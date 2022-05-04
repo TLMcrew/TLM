@@ -50,52 +50,58 @@
     </header>
   <script src="hamburger.js"></script>
 
-    <h1>Graphs page</h1>
-
-    <div name="graph" id="myGraph">
-        <canvas id="myChart" width="400" height="400"></canvas>
+    <!-- <h1>Graphs page</h1> -->
+<div class = "graphsPage">
+    <div name="graph" class="graph">
+        <canvas id="myChart"></canvas>
     </div>
     <br>
 
     <!-- <div class="halfPage"> -->
-        <div id="bioInfo">
-        <h3>Biometric Information</h3>
-        <form name="bioInfo" action="javascript:updateBio();">
-            <p>Height (in.):</p>
-            <input id="height" type="text"></input>
-            <p>Weight Goal (lbs.):</p>
-            <input id="weightGoal" type="text"></input>
-            <input type="submit" value="Update Information">
-        </form>
-        </div>
-        <div id="graphInput">
-        <h3>Graph Data</h3>
+        <div class = "inputInfo">
+        <div class = "graphData">
+        <h3 class = "graphsHeader">Graph Data</h3>
         <form name="graphInput" action="javascript:graph();">
             <p>Date:</p>
-            <input type="date" id="inputDate" min="1903-01-20" max="">
+            <input type="date" id="inputDate" min="1903-01-20" max="" class = "graphsData">
             <p>Value:</p>
-            <input type="text" id="val">
-            <input type="submit" value="Add to Graph">
-        </form>
-        <span>Scale:</span>
-        <select name="view" id="timeView">
+            <input type="text" id="val" class = "graphsData" placeholder = "Enter Value">
+</br>
+            <span>Scale:</span>
+        <select name="view" id="timeView" class="graphsDropdown">
             <option value="week" onclick="javascript:updateWeekScale(myChart)">Week View</option>
             <option value="month" onclick="javascript:updateMonthScale(myChart)">Month View</option>
             <option value="year" onclick="javascript:updateYearScale(myChart)">Year View</option>
             <option value="allTime" onclick="javascript:updateFullScale(myChart)">All Time View</option>
         </select>
-        <span>Dataset</span>
-        <select name="dataSet" id="dataSet">
+        <span>Dataset:</span>
+        <select name="dataSet" id="dataSet" class="graphsDropdown">
             <option value="cal">Calories</option>
             <option value="weight">Weight</option>
             <option value="water">Water Intake</option>
             <option value="sleep">Hours Slept</option>
             <option value="exercise">Exercise Time</option>
         </select>
+            <input type="submit" value="Add to Graph" class = "graphsButton">
+        </form>
+</div>
+        <div class="bioInfo">
+        <h3 class = "graphsHeader">Biometric Information</h3>
+        <form name="bioInfo" action="javascript:updateBio();">
+            <p>Height (in.):</p>
+            <input id="height" type="text" class = "graphsData" placeholder = "Enter Height"></input>
+            <p>Weight Goal (lbs.):</p>
+            <input id="weightGoal" type="text" class = "graphsData" placeHolder = "Enter Weight"></input>
+            <input type="submit" value="Update Information" class = "graphsButton">
+        </form>
+        </div>
+        <div id="graphInput">
         </div>
         <br>
         <!-- Updates all info in the database -->
-        <button type="button" onclick="saveData()">Save Changes</button>
+        <button class ="saveChanges" type="button" onclick="saveData()">Save Changes</button>
+</div>
+</div>
     <!-- </div> -->
     <script>
         //used as reference for various time scale views

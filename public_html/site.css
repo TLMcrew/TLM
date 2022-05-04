@@ -8,6 +8,7 @@
 }
 body {
   background-color: #1e2328;
+  height: 100vh;
 }
 
 h1 {
@@ -417,5 +418,61 @@ a {
   z-index: 12;
 }
 
-.img {
+/*------------GRAPHS PAGE------------*/
+.graph {
+  margin: 20px;
+  width: 110%;
+  height: 100%;
+}
+#myChart {
+  margin-right: 20px;
+}
+.graphsPage {
+  display: flex;
+  margin-top: 20px;
+  
+}
+.inputInfo {
+  width: 50%;
+  margin-top: 38px;
+}
+.graphsButton {
+  width: 200px !important;
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+.graphsHeader {
+  font-size: 30px;
+}
+
+.graphsData {
+  height: 30px;
+  width: 150px;
+  color: rgb(255, 255, 255) !important;
+  background-color: #3838387c;
+  border: none;
+  border-radius: 25px;
+  size: 30px;
+  padding: 5px;
+  font-size: 15px;
+  display: inline;
+}
+
+.graphsDropdown {
+  color: black;
+  margin-top: 5px;
+}
+option {
+  color: black;
+}
+p {
+  font-size: 18px;
+}
+.saveChanges {
+  color: white;
+  background-color: #000000;
+}
+.bioInfo {
+  display: inline;
 }
