@@ -63,8 +63,6 @@
         <form name="bioInfo" action="javascript:updateBio();">
             <p>Height (in.):</p>
             <input id="height" type="text"></input>
-            <!-- <p>Weight:</p>
-            <input id="weight" type="text"></input> -->
             <p>Weight Goal (lbs.):</p>
             <input id="weightGoal" type="text"></input>
             <input type="submit" value="Update Information">
@@ -100,10 +98,30 @@
         <button type="button" onclick="saveData()">Save Changes</button>
     <!-- </div> -->
     <script>
-        //Testing arrays that may be used in final, still trying to figure out how to use Chart.js
-        let myLabels = [];
-        let myValues = [];
-        let myData = [];
+        //used as reference for various time scale views
+        let currentDate = new Date();
+
+        let dd = currentDate.getDate();
+        let mm = currentDate.getMonth() + 1;
+        let yyyy = currentDate.getFullYear();
+
+        if (dd < 10) { dd = "0" + dd; }
+        if (mm < 10) { mm = "0" + mm; }
+
+        //Sets limit on html date input to the current date
+        let today = yyyy + "-" + mm + "-" + dd;
+        document.getElementById("inputDate").setAttribute("max", today);
+
+        let weekViewDate = new Date(currentDate);
+        weekViewDate.setDate(weekViewDate.getDate() - 7);
+
+        let monthViewDate = new Date(currentDate);
+        monthViewDate.setDate(monthViewDate.getDate() - 31);
+
+        let yearViewDate = new Date(currentDate);
+        yearViewDate.setDate(yearViewDate.getDate() - 365);
+        
+        let xMin;
 
         //User data arrays
         let calData = [];
@@ -114,17 +132,24 @@
 
         //Biometric info
         let height, weightGoal;
+
         /**
          * Code to fill these arrays and height and weightgoal with data from the database
          * goes here
          * 
         */
-        if(typeof height != 'undefined'){
-            document.getElementById("height").value = height;
-        }
-        if(typeof weightGoal != 'undefined'){
-            document.getElementById("weightGoal").value = weightGoal;
-        }
+
+        //fills to find max y value and min x value
+        let myValues = [];
+        let myDates = [];
+        for (let x of calData) { myValues.push(x.value); myDates.push(x.date);}
+        for (let x of weightData) { myValues.push(x.value); myDates.push(x.date);}
+        for (let x of waterData) { myValues.push(x.value); myDates.push(x.date);}
+        for (let x of sleepData) { myValues.push(x.value); myDates.push(x.date);}
+        for (let x of exerciseData) { myValues.push(x.value); myDates.push(x.date);}
+
+        if(typeof height != 'undefined'){ document.getElementById("height").value = height; }
+        if(typeof weightGoal != 'undefined'){ document.getElementById("weightGoal").value = weightGoal; }
         
         function updateBio(){
             let h = parseFloat(document.getElementById("height").value);
@@ -140,100 +165,37 @@
             //send stuff to DB
         }
 
-        for (let x of calData) { myValues.push(x.value); }
-        for (let x of weightData) { myValues.push(x.value); }
-        for (let x of waterData) { myValues.push(x.value); }
-        for (let x of sleepData) { myValues.push(x.value); }
-        for (let x of exerciseData) { myValues.push(x.value); }
+        //Pulls the values from the form, checks that the input is a number
+        //uses switch to send to correct array
+        function graph() {
+            let dataSet = document.getElementById('dataSet').value;
+            let myDate = document.graphInput.inputDate.value;
+            let val = document.graphInput.val.value;
+            let numVal = parseFloat(val);
 
-        //used as reference for various time scale views
-        let currentDate = new Date();
-
-        let dd = currentDate.getDate();
-        let mm = currentDate.getMonth() + 1;
-        let yyyy = currentDate.getFullYear();
-
-        if (dd < 10) { dd = "0" + dd; }
-        if (mm < 10) { mm = "0" + mm; }
-
-        //Sets limit on html date input to the current date
-        let today = yyyy + "-" + mm + "-" + dd;
-        document.getElementById("inputDate").setAttribute("max", today);
-
-
-        let weekViewDate = new Date(currentDate);
-        weekViewDate.setDate(weekViewDate.getDate() - 7);
-
-        let monthViewDate = new Date(currentDate);
-        monthViewDate.setDate(monthViewDate.getDate() - 31);
-
-        let yearViewDate = new Date(currentDate);
-        yearViewDate.setDate(yearViewDate.getDate() - 365);
-
-        // //adds data to a chart, probably will be changed dramatically
-        // function addData(chart, label, data) {
-        //     chart.data.labels.push(label);
-        //     chart.data.datasets.forEach((dataset) => {
-        //         dataset.data.push(data);
-        //     });
-        //     chart.update();
-        // }
-
-        //removes data from a chart, definitely will be changed dramatically
-        function removeData(chart) {
-            chart.data.labels.pop();
-            //chart.data.datasets.data.pop();
-            /*forEach((dataset) =>{
-                console.log(dataset.data);
-                dataset.data.pop();
-                
-            });*/
-        }
-
-        //Functions to change the time scale view
-        function updateWeekScale(chart) {
-            chart.options.scales.x.min = weekViewDate;
-
-            chart.update();
-        }
-
-        function updateMonthScale(chart) {
-            chart.options.scales.x.min = monthViewDate;
-
-            chart.update();
-        }
-
-        function updateYearScale(chart) {
-            chart.options.scales.x.min = yearViewDate;
-
-            chart.update();
-        }
-
-        //Will be changed
-        function updateFullScale(chart) {
-            if (myData[0]) {
-                chart.options.scales.x.min = myData[0].date;
-
-                chart.update();
-            }
-        }
-
-        function setMax(chart) {
-            myValues.sort(function (a, b) {
-                return a - b;
-            });
-            let lastInd = myValues.length - 1;
-            let max = myValues[lastInd] + (myValues[lastInd] / 5);
-            if (!isNaN(max)) {
-                let modStuff = max % 10;
-                if (modStuff != 0) {
-                    max = max + (10 - modStuff);
+            if (!isNaN(numVal)) {
+                switch (dataSet) {
+                    case "cal":
+                        dataUpdateFunction(myDate, numVal, calData);
+                        break;
+                    case "weight":
+                        dataUpdateFunction(myDate, numVal, weightData);
+                        break;
+                    case "water":
+                        dataUpdateFunction(myDate, numVal, waterData);
+                        break;
+                    case "sleep":
+                        dataUpdateFunction(myDate, numVal, sleepData);
+                        break;
+                    case "exercise":
+                        dataUpdateFunction(myDate, numVal, exerciseData);
+                        break;
                 }
-                chart.options.scales.y.max = max;
-                chart.update();
+
+                myChart.update();
             }
         }
-
+        
         //Got too lost in my original graph function, moved work here for clarity
         //Pushes a date and value into an array and then sorts by date
         function dataUpdateFunction(daDate, numberValue, dataSet) {
@@ -252,18 +214,16 @@
             }else{
                 dataSet.push({ date: daDate, value: numberValue });
                 myValues.push(numberValue);
+                myDates.push(daDate);
             }
             dataDateSort(dataSet);
             
             setMax(myChart);
+            setMin(myChart);
+            myChart.options.scales.x.min = new Date(daDate).setDate(new Date(daDate).getDate()-7);
             myChart.update();
-            // dataSet.push({ date: daDate, value: numberValue });
-            // dataDateSort(dataSet);
-            // myValues.push(numberValue);
-
-            // setMax(myChart);
         }
-
+        
         //sorts arrays by a date variable
         function dataDateSort(dataSet) {
             dataSet = dataSet.sort(function (a, b) {
@@ -278,45 +238,66 @@
                 return 0;
             });
         }
+        
+        function setMax(chart) {
+            myValues.sort(function (a, b) {
+                return b - a;
+            });
+            let max = myValues[0] + (myValues[0] / 5);
+            if (!isNaN(max)) {
+                let modStuff = max % 10;
+                if (modStuff != 0) {
+                    max = max + (10 - modStuff);
+                }
+                chart.options.scales.y.max = max;
+                chart.update();
+            }
+        }
+
+        function setMin(chart){
+            if(myDates.length != 0){
+                myDates.sort(function (a, b) {
+                    if (a < b) {
+                    return -1;
+                }
+                if (b < a) {
+                    return 1
+                }
+                return 0;
+                });
+                xMin = new Date(myDates[0]);
+                xMin.setDate(xMin.getDate()-7);
+            }
+        }
+
+        //removes data from a chart, definitely will be changed dramatically
+        function removeData(chart) {
+
+        }
+
+        //Functions to change the time scale view
+        function updateWeekScale(chart) {
+            chart.options.scales.x.min = weekViewDate;
+            chart.update();
+        }
+
+        function updateMonthScale(chart) {
+            chart.options.scales.x.min = monthViewDate;
+            chart.update();
+        }
+
+        function updateYearScale(chart) {
+            chart.options.scales.x.min = yearViewDate;
+            chart.update();
+        }
+
+        function updateFullScale(chart) {
+            chart.options.scales.x.min = xMin;
+            chart.update();
+        }
 
         function saveData(){
             //sends everything to the database
-        }
-
-        //Pulls the values from the form, checks that the input is a number
-        //uses switch to send to correct array
-        function graph() {
-            let dataSet = document.getElementById('dataSet').value;
-            let myDate = document.graphInput.inputDate.value;
-            let val = document.graphInput.val.value;
-            let numVal = parseFloat(val);
-
-            if (!isNaN(numVal)) {
-                switch (dataSet) {
-                    case "cal":
-                        dataUpdateFunction(myDate, numVal, calData);
-                        //console.log(calData);
-                        break;
-                    case "weight":
-                        dataUpdateFunction(myDate, numVal, weightData);
-                        //console.log(weightData);
-                        break;
-                    case "water":
-                        dataUpdateFunction(myDate, numVal, waterData);
-                        //console.log(waterData);
-                        break;
-                    case "sleep":
-                        dataUpdateFunction(myDate, numVal, sleepData);
-                        //console.log(sleepData);
-                        break;
-                    case "exercise":
-                        dataUpdateFunction(myDate, numVal, exerciseData);
-                        //console.log(exerciseData);
-                        break;
-                }
-
-                myChart.update();
-            }
         }
 
         //the chart itself
@@ -324,7 +305,6 @@
         const myChart = new Chart(ctx, {
             type: 'line',
             data: {
-                //labels: [],
                 //5 datasets
                 datasets: [{
                     label: 'Calories',
@@ -440,7 +420,6 @@
                             color: "#FFFFFF"
                         }
                     }
-
                 },
                 plugins: {
                     legend: {
@@ -458,27 +437,20 @@
                                     //console.log(dataPoint.value);
                                     let ind = myValues.indexOf(dataPoint.value);
                                     myValues.splice(ind, 1);
+                                    let ind2 = myDates.indexOf(dataPoint.date);
+                                    myDates.splice(ind2, 1);
                                 }
                             } else {
                                 chart.show(index);
                                 legendItem.hidden = !1;
                                 for (let dataPoint of chart.data.datasets[index].data) {
                                     myValues.push(dataPoint.value);
+                                    myDates.push(dataPoint.date);
                                 }
                             }
-                            /*
-                            n.isDatasetVisible(s) ? (n.hide(s), e.hidden = !0) : (n.show(s), e.hidden = !1);
-                            for (let dataPoint of n.data.datasets[s].data) {
-                                console.log(dataPoint);
-                                let ind = myValues.indexOf(dataPoint.value);
-                                myValues.slice(ind, ind + 1);
-                            }*/
                             setMax(chart);
+                            setMin(chart);
                         }
-                        // onClick: (evt, legendItem) => {
-                        //     //legendItem.hidden = true;
-                        //     console.log(legendItem);
-                        // }
                     }
                 },
                 //will be used for removal of data in Future Work
@@ -491,6 +463,7 @@
             }
         });
         setMax(myChart);
+        setMin(myChart);
         myChart.update();
     </script>
 </body>
