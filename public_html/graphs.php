@@ -462,7 +462,7 @@
                         }
                     }
                 },
-                //will be used for removal of data in Future Work
+                //Removes single datapoint when clicked
                 onClick: (evt, activeElements, chart) => {
                     if(activeElements[0] != null){
                         let dataInd = activeElements[0].datasetIndex;
