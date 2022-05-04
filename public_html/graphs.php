@@ -1,6 +1,4 @@
-<?php
-require ("../systemData.php");
-?>
+
 <!DOCTYPE html>
 <html>
 
