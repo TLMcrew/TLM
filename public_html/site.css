@@ -295,7 +295,7 @@ a {
   border-color: #d19900;
   width: 31em;
   height: 15.3em;
-  margin: 8px;
+  margin-top: 8px;
 }
 
 .card {
@@ -346,11 +346,61 @@ a {
   border-radius: 25px;
   border-width: 7px;
   border-color: #d19900;
+  background-color: #15181C;
   width: 31em;
   height: 15.3em;
-  margin: 8px;
+  margin-top: 8px;
+}
+.calendarTable {
+ text-align: center;
+ width: 100%;
+ border-spacing: 0;
+ border-collapse: separate;
+ table-layout: fixed;
+ margin-bottom: 50px;
+ border-radius: 25px;
+}
+.calendarTd {
+  text-align: center;
+  vertical-align: middle;
+  border-left: 1px solid rgb(0, 0, 0);
+  position: relative;
+  height: 32px;
+  cursor: pointer;  
+  background-color: rgb(255, 255, 255);
+  color: black;
+  height: 162px;
 }
 
+.calendarTd:first-child {
+  border-left: 0;
+  border-bottom-left-radius: 18px;
+}
+.calendarTd:last-child {
+  border-right: 0;
+  border-bottom-right-radius: 18px;
+}
+.calendarTh {
+  padding: 0.5em;
+  overflow: hidden;
+}
+.calendarTh:first-child {
+  border-radius: 3px 0 0 0;
+}
+.calendarTh:last-child {
+  border-radius: 0 3px 0 0;
+}
+
+.day {
+  display: block;
+  font-size: 1.2em;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  margin:0 auto 5px;
+  padding: 5px;
+  line-height: 1.8;
+}
 
 /* -----------LOGIN PAGE------------ */
 .loginBox {

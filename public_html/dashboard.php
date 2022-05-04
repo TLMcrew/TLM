@@ -86,6 +86,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         </div>
       </div>
       </div>
+      <div class = "weatherAndCalendar">
       <div class = "weather">
         <div class = "card">
         <div class = "search">
@@ -103,18 +104,52 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             <div class = "wind">Wind speed: 6.2 MPH</div>
         </div>
         </div>
-
-      <!-- <div class="weatherAndCalendar">
-        <div class="weather">
-          <div class = "search">
-            <input type="text" class="weatherSearch">
-            <button>I</button>
-            
-
-        </div>
-        <div class="calendar"></div>
       </div>
-    </div> -->
+      <div class="calendar">
+        <table class = "calendarTable">
+          <thead class = "calendarThead">
+            <th class = "calendarTh">
+              <span class = "day">1</span>
+              <span class = "abrev">Sun</span>
+            </th>
+            <th class = "calendarTh">
+              <span class = "day">2</span>
+              <span class = "abrev">Mon</span>
+            </th>
+            <th class = "calendarTh">
+              <span class = "day">3</span>
+              <span class = "abrev">Tue</span>
+            </th>
+            <th class = "calendarTh">
+              <span class = "day">4</span>
+              <span class = "abrev">Wed</span>
+            </th>
+            <th class = "calendarTh">
+              <span class = "day">5</span>
+              <span class = "abrev">Thur</span>
+            </th>
+            <th class = "calendarTh">
+              <span class = "day">6</span>
+              <span class = "abrev">Fri</span>
+            </th>
+            <th class = "calendarTh">
+              <span class = "day">7</span>
+              <span class = "abrev">Sat</span>
+            </th>
+        </thead>
+        <tbody>
+          <td class = "calendarTd"></td>
+          <td class = "calendarTd"></td>
+          <td class = "calendarTd"></td>
+          <td class = "calendarTd"></td>
+          <td class = "calendarTd"></td>
+          <td class = "calendarTd"></td>
+          <td class = "calendarTd"></td>
+        </tbody>
+        </table>
+      </div>
+</div>
+    </div>
     </div>
     <script>
       let currentDate = new Date();
