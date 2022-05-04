@@ -255,7 +255,7 @@
         }
 
         function setMin(chart){
-            if(myDates.length != 0){
+            //if(myDates.length != 0){
                 myDates.sort(function (a, b) {
                     if (a < b) {
                     return -1;
@@ -267,12 +267,7 @@
                 });
                 xMin = new Date(myDates[0]);
                 xMin.setDate(xMin.getDate()-7);
-            }
-        }
-
-        //removes data from a chart, definitely will be changed dramatically
-        function removeData(chart) {
-
+            //}
         }
 
         //Functions to change the time scale view
@@ -292,8 +287,17 @@
         }
 
         function updateFullScale(chart) {
-            chart.options.scales.x.min = xMin;
+            if(isValidDate(xMin)){
+                chart.options.scales.x.min = xMin;
+            }else{
+                chart.options.scales.x.min = weekViewDate;
+            }
+            
             chart.update();
+        }
+
+        function isValidDate(d){
+            return d instanceof Date && !isNaN(d);
         }
 
         function saveData(){
@@ -456,8 +460,20 @@
                 //will be used for removal of data in Future Work
                 onClick: (evt, activeElements, chart) => {
                     if(activeElements[0] != null){
-                        console.log(activeElements[0]);
-                        console.log(activeElements[0].element);
+                        let dataInd = activeElements[0].datasetIndex;
+                        let pointInd = activeElements[0].index;
+                        let dataPoint = chart.data.datasets[dataInd].data[pointInd];
+
+                        chart.data.datasets[dataInd].data.splice(pointInd, 1);
+                        chart.update();
+
+                        let valInd = myValues.indexOf(dataPoint.value);
+                        let dateInd = myDates.indexOf(dataPoint.date);
+                        myValues.splice(valInd, 1);
+                        myDates.splice(dateInd, 1);
+                        
+                        setMax(chart);
+                        setMin(chart);
                     }
                 }
             }
