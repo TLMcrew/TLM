@@ -69,10 +69,18 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         </select>
       </div>
       <div class="circles">
-        <canvas id="calDonut" width="100" height="100"></canvas>
-        <canvas id="waterDonut" width="100" height="100"></canvas>
-        <canvas id="exerciseDonut" width="100" height="100"></canvas>
-        <canvas id="sleepDonut" width="100" height="100"></canvas>
+        <div class = "calDonut" style = "width: 100px; height: 100px;">
+          <canvas id="calDonut"></canvas>
+        </div>
+        <div class = "waterDonut" style = "width: 100px; height: 100px;">
+          <canvas id="waterDonut"></canvas>
+        </div>
+        <div class = "exerciseDonut" style = "width: 100px; height: 100px;">
+          <canvas id="exerciseDonut" ></canvas>
+        </div>
+        <div class = "sleepDonut" style = "width: 100px; height: 100px;">
+          <canvas id="sleepDonut"></canvas>
+        </div>
       </div>
       <div class = "weather">
         <div class = "card">
