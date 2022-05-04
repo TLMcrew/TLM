@@ -268,7 +268,15 @@ a {
   height: 31em;
   margin: 8px;
 }
-
+.graphDisplay {
+  margin: 10px;
+}
+.dashboardData {
+  margin: 10px;
+  margin-top: 0 !important; 
+  border: none;
+  color: black;
+}
 .circles {
   border-style: solid;
   border-radius: 25px;
@@ -368,7 +376,7 @@ a {
   position: relative;
   height: 32px;
   cursor: pointer;  
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(162, 160, 160);
   color: black;
   height: 162px;
 }

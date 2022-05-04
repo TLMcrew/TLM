@@ -58,9 +58,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <div class="widgets">
       <div class="graphs">
         <!-- <a href="/~logan/graphs.php" class="navLink"> -->
-          <canvas id="widgetGraph" width="400" height="400"></canvas>
+          <canvas id="widgetGraph" width="350" height="320" class = "graphDisplay"></canvas>
         <!-- </a>  -->
-        <select name="dataSet" id="dataSet">
+        <select name="dataSet" id="dataSet" class = "dashboardData">
             <option value="cal">Calories</option>
             <option value="weight">Weight</option>
             <option value="water">Water Intake</option>
