@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -130,11 +131,137 @@
         let xMin;
 
         //User data arrays
-        let calData = [];
-        let weightData = [];
-        let waterData = [];
-        let sleepData = [];
-        let exerciseData = [];
+        let calData = [
+            {date: new Date(2019, 2, 15), value: 1841},
+            {date: new Date(2019, 4, 6), value: 1642},
+            {date: new Date(2019, 10, 7), value: 1638},
+            {date: new Date(2020, 0, 31), value: 2224},
+            {date: new Date(2020, 6, 9), value: 1562},
+            {date: new Date(2020, 8, 17), value: 1486},
+            {date: new Date(2020, 10, 21), value: 1221},
+            {date: new Date(2021, 0, 1), value: 1706},
+            {date: new Date(2021, 1, 28), value: 1724},
+            {date: new Date(2021, 2, 2), value: 2186},
+            {date: new Date(2021, 3, 22), value: 2264},
+            {date: new Date(2021, 4, 29), value: 1748},
+            {date: new Date(2021, 5, 8), value: 1961},
+            {date: new Date(2021, 6, 25), value: 1673},
+            {date: new Date(2021, 8, 9), value: 1839},
+            {date: new Date(2021, 9, 14), value: 1924},
+            {date: new Date(2021, 10, 15), value: 1659},
+            {date: new Date(2022, 0, 29), value: 2112},
+            {date: new Date(2022, 1, 7), value: 1905},
+            {date: new Date(2022, 1, 8), value: 2209},
+            {date: new Date(2022, 2, 3), value: 1945},
+            {date: new Date(2022, 3, 7), value: 2020},
+            {date: new Date(2022, 3, 14), value: 1726},
+            {date: new Date(2022, 3, 15), value: 1708},
+            {date: new Date(2022, 3, 18), value: 2087}
+        ];
+        let weightData = [
+            {date: new Date(2019, 4, 6), value: 172},
+            {date: new Date(2019, 6, 30), value: 179},
+            {date: new Date(2019, 10, 7), value: 170},
+            {date: new Date(2020, 0, 31), value: 162},
+            {date: new Date(2020, 2, 2), value: 173},
+            {date: new Date(2020, 6, 9), value: 180},
+            {date: new Date(2020, 8, 17), value: 171},
+            {date: new Date(2020, 10, 21), value: 173},
+            {date: new Date(2021, 0, 1), value: 161},
+            {date: new Date(2021, 1, 28), value: 174},
+            {date: new Date(2021, 2, 2), value: 161},
+            {date: new Date(2021, 3, 22), value: 170},
+            {date: new Date(2021, 4, 29), value: 169},
+            {date: new Date(2021, 5, 8), value: 161},
+            {date: new Date(2021, 6, 25), value: 165},
+            {date: new Date(2021, 8, 9), value: 180},
+            {date: new Date(2021, 9, 14), value: 177},
+            {date: new Date(2021, 10, 15), value: 180},
+            {date: new Date(2021, 11, 9), value: 164},
+            {date: new Date(2022, 1, 8), value: 171},
+            {date: new Date(2022, 2, 3), value: 180},
+            {date: new Date(2022, 2, 17), value: 179},
+            {date: new Date(2022, 3, 7), value: 176},
+            {date: new Date(2022, 3, 15), value: 176},
+            {date: new Date(2022, 3, 18), value: 173},
+            {date: new Date(2022, 4, 3), value: 175},
+        ];
+        let waterData = [
+            {date: new Date(2019, 2, 15), value: 28},
+            {date: new Date(2019, 4, 6), value: 69},
+            {date: new Date(2019, 6, 30), value: 50},
+            {date: new Date(2019, 8, 6), value: 80},
+            {date: new Date(2019, 10, 7), value: 60},
+            {date: new Date(2020, 2, 2), value: 78},
+            {date: new Date(2020, 4, 25), value: 69},
+            {date: new Date(2020, 6, 9), value: 53},
+            {date: new Date(2021, 0, 1), value: 77},
+            {date: new Date(2021, 1, 28), value: 52},
+            {date: new Date(2021, 2, 2), value: 69},
+            {date: new Date(2021, 3, 22), value: 54},
+            {date: new Date(2021, 4, 29), value: 61},
+            {date: new Date(2021, 5, 8), value: 75},
+            {date: new Date(2021, 6, 25), value: 37},
+            {date: new Date(2021, 7, 29), value: 52},
+            {date: new Date(2021, 9, 14), value: 49},
+            {date: new Date(2021, 11, 9), value: 42},
+            {date: new Date(2022, 0, 29), value: 77},
+            {date: new Date(2022, 1, 8), value: 31},
+            {date: new Date(2022, 2, 17), value: 44},
+            {date: new Date(2022, 3, 14), value: 52},
+            {date: new Date(2022, 3, 15), value: 42},
+            {date: new Date(2022, 3, 18), value: 78},
+            {date: new Date(2022, 4, 2), value: 57},
+            {date: new Date(2022, 4, 3), value: 72}
+        ];
+        let sleepData = [
+            {date: new Date(2019, 8, 6), value: 10},
+            {date: new Date(2019, 10, 7), value: 11},
+            {date: new Date(2020, 6, 9), value: 5},
+            {date: new Date(2020, 8, 17), value: 4},
+            {date: new Date(2020, 10, 21), value: 4},
+            {date: new Date(2021, 1, 28), value: 9},
+            {date: new Date(2021, 2, 2), value: 5},
+            {date: new Date(2021, 3, 22), value: 10},
+            {date: new Date(2021, 4, 29), value: 4},
+            {date: new Date(2021, 6, 25), value: 12},
+            {date: new Date(2021, 8, 9), value: 9},
+            {date: new Date(2021, 9, 14), value: 10},
+            {date: new Date(2022, 0, 29), value: 7},
+            {date: new Date(2022, 1, 7), value: 5},
+            {date: new Date(2022, 1, 8), value: 4},
+            {date: new Date(2022, 3, 7), value: 7},
+            {date: new Date(2022, 3, 14), value: 6},
+            {date: new Date(2022, 3, 15), value: 9},
+            {date: new Date(2022, 3, 18), value: 4},
+            {date: new Date(2022, 4, 2), value: 8},
+        ];
+        let exerciseData = [
+            {date: new Date(2019, 4, 6), value: 74},
+            {date: new Date(2019, 6, 30), value: 89},
+            {date: new Date(2019, 8, 6), value: 50},
+            {date: new Date(2019, 10, 7), value: 87},
+            {date: new Date(2020, 4, 25), value: 46},
+            {date: new Date(2020, 6, 9), value: 54},
+            {date: new Date(2020, 8, 17), value: 50},
+            {date: new Date(2021, 0, 1), value: 71},
+            {date: new Date(2021, 1, 28), value: 31},
+            {date: new Date(2021, 2, 2), value: 41},
+            {date: new Date(2021, 3, 22), value: 86},
+            {date: new Date(2021, 6, 25), value: 39},
+            {date: new Date(2021, 7, 29), value: 73},
+            {date: new Date(2021, 8, 14), value: 55},
+            {date: new Date(2022, 0, 29), value: 48},
+            {date: new Date(2022, 1, 7), value: 39},
+            {date: new Date(2022, 1, 8), value: 41},
+            {date: new Date(2022, 2, 17), value: 77},
+            {date: new Date(2022, 3, 7), value: 58},
+            {date: new Date(2022, 3, 14), value: 79},
+            {date: new Date(2022, 3, 15), value: 63},
+            {date: new Date(2022, 3, 18), value: 69},
+            {date: new Date(2022, 4, 2), value: 84},
+            {date: new Date(2022, 4, 3), value: 78}
+        ];
 
         //Biometric info
         let height, weightGoal;
@@ -166,7 +293,6 @@
             if(!isNaN(w)){
                 weightGoal = w;
             }
-            console.log(height + ' ' + weightGoal);
 
             //send stuff to DB
         }
