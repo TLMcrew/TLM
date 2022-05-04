@@ -165,7 +165,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         {date: new Date(), value: 1200}, {date: new Date(), value: 1000}
       ];
       let weightData = [{date: new Date(2021, 11, 30), value: 200}];
-      let waterData = [{date: new Date(), value: 30}];
+      let waterData = [{date: new Date(2021, 11, 30), value: 30}];
       let sleepData = [];
       let exerciseData = [];
 
@@ -193,7 +193,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
               let color = String(donut.data.datasets[0].backgroundColor[0]);
               
               let indOfO = color.search('0');
-              color = color.slice(0, indOfO) + "1)";
+              color = color.slice(0, indOfO) + "01)";
               donut.data.datasets[0].backgroundColor[0] = color;
             }else{
               donutArray[1] -= dataPoint.value;
@@ -241,6 +241,41 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
           widgetGraph.options.scales.x.min = xMin;
         }
         widgetGraph.update();
+      }
+
+      function donutOnClick(chart, graphData, donutData, constant){
+          let val = prompt("Enter New Value:");
+          val = parseFloat(val);
+          if(!isNaN(val)){
+            let ind = -1;
+            for(let values of graphData){
+              if(values.date.getDate() == new Date().getDate()){
+                ind = graphData.indexOf(values);
+                values.value = val;
+              }
+            }
+
+            if(ind == -1){
+              graphData.push({date: new Date(), value: val});
+            }
+
+            changeGraph();
+            chart.data.datasets[0].data[0] = val;
+            if(constant - val <= 0){
+              chart.data.datasets[0].data[1] = 0;
+              let color = String(chart.data.datasets[0].backgroundColor[0]);
+              let indOfO = color.search('0');
+              color = color.slice(0, indOfO) + "01)";
+              chart.data.datasets[0].backgroundColor[0] = color;
+            }else{
+              chart.data.datasets[0].data[1] = constant - val;
+              let color = String(chart.data.datasets[0].backgroundColor[0]);
+              let indOfO = color.search('0');
+              color = color.slice(0, indOfO) + "0.2)";
+              chart.data.datasets[0].backgroundColor[0] = color;
+            }
+            chart.update();
+          }
       }
 
       const ctx = document.getElementById('widgetGraph').getContext('2d');
@@ -308,9 +343,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         display: false
                     }
                 },
-              // onClick: (evt, activeElements, chart) => {
-                
-              // }
             }
         });
       
@@ -365,12 +397,12 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         },
         plugins: [counter],
         options:{
-        onClick(evt, activeElements, chart) {
-          console.log(chart.options);
+          onClick(evt, activeElements, chart) {
+            donutOnClick(chart, calData, calDonutData, dailyCal);
+          }
         }
-      }
       });
-
+      
       const ctx3 = document.getElementById('waterDonut').getContext('2d');
       const waterDonutGraph = new Chart(ctx3, {
         type: 'doughnut',
@@ -388,8 +420,14 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             cutout: [66]
           }]
         },
-        plugins: [counter]
+        plugins: [counter],
+        options:{
+          onClick(evt, activeElements, chart) {
+            donutOnClick(chart, waterData, waterDonutData, dailyWater);
+          }
+        }
       });
+
       const ctx4 = document.getElementById('exerciseDonut').getContext('2d');
       const exerciseDonutGraph = new Chart(ctx4, {
         type: 'doughnut',
@@ -407,7 +445,12 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             cutout: [66]
           }]
         },
-        plugins: [counter]
+        plugins: [counter],
+        options:{
+          onClick(evt, activeElements, chart) {
+            donutOnClick(chart, exerciseData, exerciseDonutData, dailyExer);
+          }
+        }
       });
 
       const ctx5 = document.getElementById('sleepDonut').getContext('2d');
@@ -427,7 +470,12 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             cutout: [66]
           }]
         },
-        plugins: [counter]
+        plugins: [counter],
+        options:{
+          onClick(evt, activeElements, chart) {
+            donutOnClick(chart, sleepData, sleepDonutData, dailySleep);
+          }
+        }
       });
 
       fillDonut(calData, calDonutData, calDonutGraph, dailyCal);
