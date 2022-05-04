@@ -156,7 +156,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     </div>
     <script>
       document.getElementById("widgetGraph").onclick = function(e){
-        window.location.href = 'graphs.php';
+      window.location.href = '/~logan/graphs.php';
       };
 
       let currentDate = new Date();
