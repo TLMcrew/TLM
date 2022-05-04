@@ -344,11 +344,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
           }]
         },
         plugins: [counter],
-        onClick: (evt, activeElements, chart) => {
-          if(activeElements[0] != null){
-             console.log(activeElements[0]);
-          }
+        options:{
+        onClick(evt, activeElements, chart) {
+          console.log(chart.options);
         }
+      }
       });
 
       const ctx3 = document.getElementById('waterDonut').getContext('2d');
