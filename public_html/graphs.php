@@ -293,7 +293,6 @@
             if(!isNaN(w)){
                 weightGoal = w;
             }
-            console.log(height + ' ' + weightGoal);
 
             //send stuff to DB
         }
